@@ -1,0 +1,26 @@
+{
+  "level":{
+    "properties":{
+      "tutorial": true
+    },
+    "size":{
+      "x":0,
+      "y":0
+    },
+    "player":{
+      "x":10,
+      "y":25
+    },
+    "cores":[
+      { "x":0,"y":0,"type":"small","properties":{
+        "start":{ "angle":270 }, "end":{ "angle":90 } }
+      },
+      { "x":3,"y":0,"type":"small","properties":{
+        "start":{ "angle":270 }, "end":{ "angle":90 } }
+      }
+      { "x":3,"y":4,"type":"medium","properties":{} },
+      { "x":7,"y":4,"type":"small","properties":{} },
+      { "x":7,"y":7,"type":"small","properties":{} }
+    ]
+  }
+}

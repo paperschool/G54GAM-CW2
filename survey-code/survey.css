@@ -1,0 +1,115 @@
+
+*{
+    top:0;
+    left:0;
+    margin:0;
+    padding:0;
+}
+
+.divider{
+    width:100%;
+    height:2px;
+    background-color: #999999;
+}
+
+/*  Splash Styling */
+
+.page-splash-head {
+  width: 100%;
+  height: 20%;
+  margin-bottom: 100px;
+}
+
+.splash-head-title {
+  float: left;
+  width: 49%;
+  font-size: 2em;
+  font-style: normal;
+}
+
+.splash-head-date {
+  float: right;
+  width: 49%;
+  font-size: 2em;
+  font-style: normal;
+  text-align: right;
+}
+
+.page-splash-body {
+  width: 100%;
+  height: 60%;
+  margin-bottom: 30px;
+}
+
+.page-splash-input {
+  width: 100%;
+  height: 20%;
+  margin-bottom: 100px;
+}
+
+/*  Question Styling */
+
+.page-question {
+    padding: 10%;
+    width:0%;
+    height:auto;
+    text-align: center;
+}
+
+.page-button {
+    padding: 0%;
+    z-index:0;
+    box-shadow: 5px 5px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.page-button:hover{
+    box-shadow: /*inset 0px 0px 70px rgba(200,200,200,0.9), */ 5px 5px rgba(100,100,100,0.2);;
+    /*background-color: rgb(198, 198, 198);*/
+    color: white;
+}
+
+
+.page-button-text {
+
+}
+
+.page-button-true{
+    background-color:#2ecc71;
+    color: #1a6a33;
+}
+
+.page-button-false{
+    background-color:#c0392b;
+    color: #6b261d;
+}
+
+.page-button-true{
+    background-color:#2ecc71;
+    color: #1a6a33;
+}
+
+.page-button-1{
+    background-color: #ffc613;
+    color: #fffdfd;
+}
+
+.page-button-2{
+    background-color: #ffa142;
+    color: #fffdfd;
+}
+
+.page-button-3{
+    background-color: #ff7534;
+    color: #fffdfd;
+}
+
+.page-button-4{
+    background-color: #ff512c;
+    color: #fffdfd;
+}
+
+.page-button-5{
+    background-color: #ff1e23;
+    color: #fffdfd;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hotline (Sillicon) Valley</title>
+
+	<link rel="stylesheet" href="loader.css">
+	<link rel="stylesheet" href="stylesheet.css">
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+	<!-- Libries -->
+
+	<script src="Game/Libs/quadtrees.js" type="text/javascript"></script>
+
+	<script src="Game/Libs/ASTAR.js" type="text/javascript"></script>
+
+	<script src="Game/Libs/SAT.js" type="text/javascript"></script>
+
+	<script src="Game/Libs/btree-complete.js" type="text/javascript"></script>
+
+	<script src="Game/Libs/Utility.js" type="text/javascript"></script>
+
+	<script src="Game/Libs/howler.core.js" type="text/javascript"></script>
+
+	<!-- Base Class Imports -->
+
+	<script src="Game/Base/Entity.js" type="text/javascript"></script>
+
+	<script src="Game/Base/Constants.js" type="text/javascript"></script>
+
+	<script src="Game/Base/Input.js" type="text/javascript"></script>
+
+	<script src="Game/Base/Wall.js" type="text/javascript"></script>
+
+	<script src="Game/Base/Floor.js" type="text/javascript"></script>
+
+	<script src="Game/Base/Actor.js" type="text/javascript"></script>
+
+	<!-- ELECTRON classes -->
+
+	<script src="Game/Electron/Electron.js" type="text/javascript"></script>
+
+	<script src="Game/Electron/Core.js" type="text/javascript"></script>
+
+	<script src="Game/Electron/CoreManager.js" type="text/javascript"></script>
+
+	<script src="Game/Electron/Player.js" type="text/javascript"></script>
+
+	<script src="Game/Electron/ElectronText.js" type="text/javascript"></script>
+
+	<script src="Game/Electron/Tunnel.js" type="text/javascript"></script>
+
+	<!-- GUI Classes -->
+
+	<script src="Game/HUD/HUD.js" type="text/javascript"></script>
+
+	<script src="Game/HUD/HUDMap.js" type="text/javascript"></script>
+
+	<script src="Game/HUD/Diagnostics.js" type="text/javascript"></script>
+
+	<!-- Agent Imports -->
+
+
+	<script src="Game/Agents/AgentManager.js" type="text/javascript"></script>
+
+	<script src="Game/Agents/Behaviour/Agent_Generic_Behaviour.js" type="text/javascript"></script>
+
+	<script src="Game/Agents/Behaviour/Agent_Patrol_Behaviour.js" type="text/javascript"></script>
+
+	<script src="Game/Agents/Behaviour/Agent_Multi_Behaviour.js" type="text/javascript"></script>
+
+	<!-- <script src="Game/Agents/AgentBehaviourTree.js" type="text/javascript"></script> -->
+
+	<script src="Game/Agents/Agent.js" type="text/javascript"></script>
+
+	<script src="Game/Agents/Agent_Patrol.js" type="text/javascript"></script>
+
+	<script src="Game/Agents/Agent_Communicative.js" type="text/javascript"></script>
+
+
+	<!-- Utility Classes -->
+
+	<script src="Game/Base/Camera.js" type="text/javascript"></script>
+
+	<script src="Game/Base/Colour.js" type="text/javascript"></script>
+
+	<script src="Game/Grid.js" type="text/javascript"></script>
+
+	<script src="Game/Base/Sprite.js" type="text/javascript"></script>
+
+	<script src="Game/Sound/EngineSounds.js" type="text/javascript"></script>
+
+	<!-- Particle System -->
+
+	<script src="Game/Particle/ParticleSystem.js" type="text/javascript"></script>
+
+	<!-- Gun Classes -->
+
+	<script src="Game/Gun/Bullet.js" type="text/javascript"></script>
+
+	<script src="Game/Gun/Gun.js" type="text/javascript"></script>
+
+	<script src="Game/Gun/Pistol.js" type="text/javascript"></script>
+
+	<script src="Game/Gun/Shotgun.js" type="text/javascript"></script>
+
+	<script src="Game/Gun/Machinegun.js" type="text/javascript"></script>
+
+	<script src="Game/Gun/Flamethrower.js" type="text/javascript"></script>
+
+	<!-- Collision Classes -->
+
+	<script src="Game/Collisions/CollisionManager.js" type="text/javascript"></script>
+
+	<script src="Game/Collisions/Collider.js" type="text/javascript"></script>
+
+	<!-- Level Classes -->
+
+	<script src="Game/Level/Level.js" type="text/javascript"></script>
+
+	<script src="Game/Level/LevelTutorial.js" type="text/javascript"></script>
+
+	<script src="Game/Level/LevelManager.js" type="text/javascript"></script>
+
+	<script src="Game/Level/Level_Timer.js" type="text/javascript"></script>
+
+	<script src="Game/Level/Level_Background.js" type="text/javascript"></script>
+
+	<script src="Game/Level/LevelMusic.js" type="text/javascript"></script>
+
+	<!-- Main Game Imports -->
+
+	<script src="Game/Main/App.js" type="text/javascript"></script>
+
+	<script src="Game/Main/State.js" type="text/javascript"></script>
+
+	<script src="Game/Main/World.js" type="text/javascript"></script>
+
+	<!-- Pick Up Imports -->
+
+	<script src="Game/Pickup/PickupManager.js" type="text/javascript"></script>
+
+	<script src="Game/Pickup/Pickup.js" type="text/javascript"></script>
+
+	<script src="Game/Pickup/Health.js" type="text/javascript"></script>
+
+</head>
+
+	<body>
+
+		<canvas id="game_canvas" class="game_canvas" width="0" height="0"></canvas>
+
+		<div class="loader-frame">
+			<div class="loader-container">
+				<div class="outerCircle"></div>
+				<div class="innerCircle"></div>
+			</div>
+		</div>
+
+	</body>
+
+</html>
+
+<!-- <div class="modal"><h1>PAGE LOADING</h1></div> -->

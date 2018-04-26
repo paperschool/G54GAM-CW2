@@ -1,0 +1,76 @@
+
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+
+
+@font-face {
+    font-family: 'aldo';
+    src: url('font/AldotheApache.woff2') format('woff2'),
+         url('font/AldotheApache.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: 'techno-hideo';
+  src: url('font/TechnoHideo-Bold.woff2') format('woff2'),
+       url('font/TechnoHideo-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'techno-hideo';
+  src: url('font/TechnoHideo.woff2') format('woff2'),
+       url('font/TechnoHideo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'cherry';
+    src: url('font/CherryMonospace-Light.woff2') format('woff2'),
+         url('font/CherryMonospace-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'crt';
+    src: url('font/Hacked-CRT.woff2') format('woff2'),
+         url('font/Hacked-CRT.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'wdata';
+    src: url('font/Withheld-Data.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'futurist';
+    src: url('font/FuturistFixedWidthRegular.woff2') format('woff2'),
+         url('font/FuturistFixedWidthRegular.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+*{
+  left:0;
+  top:0;
+  margin:0;
+  padding:0;
+  overflow: hidden;
+}
+
+a {
+  font-family: 'poiret one' ;
+  font-family: 'techno-hideo' ;
+}
+
+.game_canvas {
+  position: relative;
+  z-index: 0;
+}

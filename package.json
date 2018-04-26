@@ -1,0 +1,26 @@
+{
+  "name": "multi_agent_game_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "author":"Dominic Jomaa",
+    "type": "git",
+    "url": "git+https://github.com/paperschool/Multi-Agent-Game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies":{
+    "socket.io":"*",
+    "file-system":"*",
+    "express":"*",
+    "morgan":"*"
+  },
+  "bugs": {
+    "url": "https://github.com/paperschool/Multi-Agent-Game/issues"
+  },
+  "homepage": "https://github.com/paperschool/Multi-Agent-Game#readme"
+}
