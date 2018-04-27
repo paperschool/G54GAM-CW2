@@ -1,8 +1,9 @@
 
 var Sizes = {
-  MARGIN     : { id:"margin", unit:10,  scalar:1 },
+  MARGIN     : { id:"margin", unit:50,  scalar:1 },
   PLAYER     : { id:"player", unit:50,  scalar:1 },
   ENEMY      : { id:"enemy",  unit:50,  scalar:1 },
+  TUNNEL     : { id:"tunnel", unit:70,  scalar:1 },
   UNIT       : { id:"unit",   unit:400, scalar:1 },
   CORE_SMALL : { id:"small",  unit:400, scalar:1 },
   CORE_MEDIUM: { id:"medium", unit:400, scalar:2 },

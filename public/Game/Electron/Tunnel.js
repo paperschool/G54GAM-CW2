@@ -20,7 +20,7 @@ class Tunnel extends Electron {
 
     this.setMargin(30);
 
-    this.setRadius(this.level.player.getRadius()+20);
+    this.setRadius(Sizes.TUNNEL.unit);
 
     this.setCollider(new CircularCollider(this.getPos().x,this.getPos().y,this.getRadius()));
 
@@ -62,7 +62,7 @@ class Tunnel extends Electron {
 
   checkPlayerCollision(){
 
-    if(this.getType() === TunnelType.ENTRANCE) return;
+    // if(this.getType() === TunnelType.ENTRANCE) return;
 
     let r = this.getCollider().test(this.level.player.getCollider());
 
@@ -77,7 +77,12 @@ class Tunnel extends Electron {
         }
         this.setPlayerColliding(true);
 
-        this.getColour().setRGBA(100,255,100,1);
+        if(this.type === TunnelType.EXIT){
+          this.getColour().setRGBA(100,255,100,1);
+        } else {
+          this.getColour().setRGBA(255,100,100,1);
+        }
+
 
       } else {
 
@@ -108,12 +113,9 @@ class Tunnel extends Electron {
 
 
     if(this.getPlayerCollided() && this.type === TunnelType.EXIT){
-      this.tunnelText.getPos().x = this.getCore().getPos().x;
-      this.tunnelText.getPos().y = this.getCore().getPos().y+50;
-      // this.tunnelText.getPos().y = this.getCore().getRadius() + (this.getRadius()+20)*2 + this.getMargin()*2;
+      this.tunnelText.getPos().x = this.getPos().x;
+      this.tunnelText.getPos().y = this.getPos().y + this.getRadius() + this.getMargin()*3;
       this.tunnelText.update(deltaTime);
-      // this.setRadius(this.getRadius()-0.5);
-      // this.getColour().setA(this.getColour().getA()*0.9);
     } else {
       this.checkPlayerCollision();
     }
@@ -123,16 +125,38 @@ class Tunnel extends Electron {
 
   draw(camera){
 
-    Draw.circleOutline(
-      this.getPos().x-camera.x,
-      this.getPos().y-camera.y,
-      this.getRadius());
-
-    Draw.strokeCol(10,this.getColour());
-
-    if(this.getPlayerCollided()){
+    if(this.getPlayerCollided() && this.getType() === TunnelType.EXIT){
       this.tunnelText.draw(camera);
     }
+
+    if(this.getType() === TunnelType.EXIT){
+
+      for(let i = 1 ; i < 11 ; i+=1){
+
+        Draw.strokeCol(i/2,this.getColour());
+        Draw.circleOutline(
+          this.getPos().x - camera.x+Utility.Random(-(10-i),(10-i)),
+          this.getPos().y - camera.y + Utility.Map(i,0,11,this.getRadius(),0),
+          ((this.getRadius()+Utility.Random(-2,2))*0.1*i));
+
+      }
+
+    } else if(this.getType() === TunnelType.ENTRANCE){
+
+        for(let i = 1 ; i < 11 ; i+=2){
+
+          Draw.strokeCol(i/2,this.getColour());
+          Draw.circleOutline(
+            this.getPos().x-camera.x,
+            this.getPos().y-camera.y,
+            ((this.getRadius()+Utility.Random(-2,2))*0.1*i));
+
+
+        }
+
+    }
+
+    Draw.resetStroke();
 
   }
 

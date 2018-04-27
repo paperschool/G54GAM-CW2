@@ -10,8 +10,16 @@ class LevelTutorial {
     // setting level state
     this.levelState = LevelState.RUNNING;
 
+    // manager for enemies
+    this.orbitals = new OrbitalManager(this);
+
     // creating player and setting position to center of canvas
     this.player = new Player(0,0,null);
+
+    this.player.setCanMoveLeft(true);
+    this.player.setCanMoveRight(false);
+
+    this.snow = new EnvironmentalParticleSystem(this,this.player,new SAT.Vector(0.5,0.1),400,new SAT.Vector(10000,10000));
 
     input.setCallBack(InputKeys.SPACE,'tutorial-level-exit',(function(){
 
@@ -34,6 +42,9 @@ class LevelTutorial {
     // this.camera.setFocus(this.player,new SAT.Vector(CW/2,CH/2));
 
     this.colour = new PulseColour(new Colour().random());
+    this.colour.setR(0,0);
+    this.colour.setG(100,200);
+    this.colour.setB(100,200);
 
 
     this.tutorialTextIndex = 0;
@@ -62,6 +73,9 @@ class LevelTutorial {
     input.setCallBack(InputKeys.RIGHT,'tutorial-level-right',(function(){
 
       if(this.tutorialTextIndex === 1){
+
+        this.player.setCanMoveRight(true);
+
         this.tutorialTextIndex = 2;
         this.leveltext.text = this.tutorialtext[this.tutorialTextIndex];
         this.leveltext.reset();
@@ -104,8 +118,12 @@ class LevelTutorial {
 
     this.cores.update(deltaTime);
 
+    this.orbitals.update(deltaTime);
+
     // update player
     this.player.update(deltaTime);
+
+    this.snow.update(deltaTime);
 
     if(this.levelState === LevelState.CAN_EXIT){
       this.player.getPos().set(this.cores.end.getPos());
@@ -128,16 +146,17 @@ class LevelTutorial {
 
     Draw.rect(0,0,CW,CH);
 
+    this.snow.draw(camera);
+
     this.cores.draw(camera);
+
+    this.orbitals.draw(camera);
 
     this.player.draw(camera);
 
     this.leveltext.draw(camera);
 
-  }
 
-  addAgent(x,y,type,weapon,patrol,team){
-    this.agents.addAgent(x,y,type,weapon,patrol,team);
   }
 
   addPickup(x,y,type){

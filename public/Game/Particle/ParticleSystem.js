@@ -115,7 +115,7 @@ class Snow {
 
     this.flakes = [];
 
-    for(let flake = 0 ; flake < this.flakes.length ; flake++){
+    for(let flake = 0 ; flake < 1000 ; flake++){
       this.flakes.push(new Flake());
     }
 

@@ -13,12 +13,8 @@
     },
     "cores":[
       { "x":0,"y":0,"type":"small","properties":{
-        "start":{ "angle":270 } }
-      },
-      { "x":3,"y":0,"type":"small","properties":{
-         "end":{ "angle":90 } }
+        "start":{ "angle":270 },  "end":{ "angle":90 } }
       }
-
     ]
   }
 }

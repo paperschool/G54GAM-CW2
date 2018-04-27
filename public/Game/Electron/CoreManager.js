@@ -15,6 +15,16 @@ class CoreManager {
 
     this.highlightExit = false;
 
+    input.setCallBack(InputKeys.SPACE,'core-manager-jump-attempt',(function(){
+
+      let currentCore = this.player.getCore();
+
+      if(currentCore.getCanJump()){
+        currentCore.jump(this.player,this.player.getDirection()+180);
+      }
+
+    }).bind(this));
+
   }
 
   setHighlightExit(highlight){
@@ -23,15 +33,18 @@ class CoreManager {
 
   addCore(x,y,r,properties){
 
-    this.cores.push(new Core(this.level,x,y,r,properties));
+    let nCore = new Core(this.level,x,y,r,properties)
+
+    this.cores.push(nCore);
 
     // sets player origin core;
     if(properties.start){
-      this.level.player.setCore(this.cores[this.cores.length-1]);
-      this.level.player.setDirection(properties.start.angle);
+
+      nCore.addChild(this.player,properties.start.angle);
 
       this.start = new Tunnel(this.level,TunnelType.ENTRANCE,properties.start);
-      this.start.setCore(this.cores[this.cores.length-1]);
+
+      nCore.addChild(this.start,properties.start.angle);
 
     }
 
@@ -42,6 +55,9 @@ class CoreManager {
 
     }
 
+    // returning core for addition level creation steps
+    return nCore;
+
   }
 
   update(deltaTime){
@@ -50,29 +66,37 @@ class CoreManager {
       core.update(deltaTime);
     }
 
-    // checking adjacent jumping
-
-    let pcore = this.player.getCore();
-
-    for(let core of this.cores){
-
-      // checking core is not player core and core is adjacent to player core
-      if(
-        pcore != core &&
-        pcore.checkAdjacent(core) &&
-        pcore.checkAngularAdjacent(this.player,core)){
-
-        console.log(" Can Jump ");
-
-      }
-
-    }
-
-
     this.start.update(deltaTime);
 
     this.end.update(deltaTime);
 
+    this.canJump();
+
+  }
+
+  canJump(){
+
+    // storing players core
+    let pcore = this.player.getCore();
+
+    pcore.setCanJump(false);
+
+    // iterating over all cores
+    for(let core of this.cores){
+
+      // checking core is not parent of player, core is adjacent to player core
+      // and player is within jump sector for migration
+      if(pcore != core){
+        if(pcore.checkAdjacent(core) &&  pcore.checkAngularAdjacent(this.player,core)){
+          // console.log("Can Jump!");
+          pcore.setCanJump(true);
+          pcore.setJumpCore(core);
+        } else {
+          core.setCanJump(false);
+        }
+      }
+
+    }
 
   }
 
@@ -89,7 +113,7 @@ class CoreManager {
       let pos = this.end.getPolarVector(
         this.end.getCore().getPos(),
         dot+player.getDirection(),
-        this.end.getCore().getRadius()+Size.PLAYER.unit+Size.MARGIN.unit
+        this.end.getCore().getRadius()+Sizes.PLAYER.unit+Sizes.MARGIN.unit
       );
 
       Draw.fill(255,255,255);

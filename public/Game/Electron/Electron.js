@@ -14,6 +14,14 @@ class Electron extends Actor {
 
   }
 
+  getCanMoveRight(){
+    return this.canMoveRight;
+  }
+
+  getCanMoveLeft(){
+    return this.canMoveLeft;
+  }
+
   // getting origin point of location
   getCore(){
     return this.core;
@@ -37,13 +45,21 @@ class Electron extends Actor {
     this.core = core;
   }
 
-  setJump(jump){
-    this.jump = jump;
+  setInvincibility(set){
+    this.invincible = set;
   }
 
-  // apply impulse in left acceleration
-  moveLeft(){
-    this.applyImpulse(new SAT.Vector(-this.getSpeed().x,0));
+  setCanMoveRight(canMoveRight){
+    this.canMoveRight = canMoveRight;
+  }
+
+  // may have more behaviuour later but for now simply nulls the core
+  releaseCore(){
+    this.core = null;
+  }
+
+  setJump(jump){
+    this.jump = jump;
   }
 
   evaluateVelocity(deltaTime){
@@ -51,14 +67,20 @@ class Electron extends Actor {
     // setting back up position
     this.oldPos.set(this.getPos());
 
+    // scaling for radius by calculating the radial speed then multiplying by sign direction
+    this.getAcc().x = (Math.pow(this.getAcc().x,2) / this.getRadius()) * Math.sign(this.getAcc().x);
+
     // updating velocity with acceleration
     this.vel.add(this.acc);
 
-    // set the direction
-    this.setDirection(this.getDirection()+this.getVel().x);
+    // normalising direction around 360 -> 0
+    let newDirection = (this.getDirection()+this.getVel().x) % 360;
 
-    // normalise to 360
-    this.setDirection(this.getDirection() % 360);
+    // wrapping direction to positive angles
+    newDirection = (newDirection < 0 ? newDirection+360 : newDirection);
+
+    // set the direction
+    this.setDirection(newDirection);
 
     this.pos.set(
       this.getCore().getOrbitPosition(this)

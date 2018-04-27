@@ -34,9 +34,13 @@ class StartState extends State{
     this.ready = false;
 
     this.colour = new PulseColour(new Colour().random());
-    this.colour.setR(100,255);
-    this.colour.setG(100,255);
-    this.colour.setB(100,255);
+    this.colour.setR(0,0);
+    this.colour.setG(100,230);
+    this.colour.setB(100,230);
+
+    this.center = new Actor(CW/2,CH/2);
+
+    this.snow = new EnvironmentalParticleSystem(this,this.center,new SAT.Vector(1,0.5),1000,new SAT.Vector(10000,10000));
 
     // text level
     this.title = new ElectronText(CW/2,CH/2,'ELECTRON','futurist',230,'center',200,55,50,50,null)
@@ -65,11 +69,13 @@ class StartState extends State{
   update(deltaTime){
 
     this.colour.step();
-    this.colour.getColour().a = 0.8;
+    this.colour.getColour().a = 0.4;
     this.titleOffset = this.titleOffset < 360 ? this.titleOffset+4 : 0;
 
     this.title.update(deltaTime);
     this.title2.update(deltaTime);
+
+    this.snow.update(deltaTime);
 
     if(Utility.Random(0,100) < 5){
       this.ParticleSystem.addParticle(
@@ -89,6 +95,8 @@ class StartState extends State{
 
     Draw.fillCol(this.colour.getColour());
     Draw.rect(0,0,CW,CH);
+
+    this.snow.draw({x:CW/2,y:CH/2});
 
     this.title2.draw({x:CW/2,y:CH/2});
     this.title.draw({x:CW/2,y:CH/2});
@@ -164,29 +172,38 @@ class GameOverState extends State {
 
     this.titleOffset = 0;
 
+    // text level
+    this.title = new ElectronText(CW/2,CH/2,'PHASED OUT','futurist',180,'center',200,55,50,50,null)
+    this.title.useCamera = false;
+    this.title.printDelay = 50;
+    this.title.setColour(new Colour(255,100,100));
+
+    this.subtitle = new ElectronText(CW/2,CH*2/3,'PRESS R TO TRY AGAIN','futurist',90,'center',80,55,50,50,null)
+    this.subtitle.useCamera = false;
+    this.subtitle.printDelay = 20;
+    this.subtitle.setColour(new Colour(255,255,255));
+
   }
 
-  setup(){}
+  setup(){
+    this.title.reset();
+    this.subtitle.reset();
+  }
 
   update(deltaTime){
-    this.titleOffset = this.titleOffset < 360 ? this.titleOffset+4 : 0;
+
+    this.title.update(deltaTime);
+    this.subtitle.update(deltaTime);
+
   }
 
   draw(){
 
     Draw.fill(51,51,51,0.5);
-    Draw.fill(51,51,51,0.5);
     Draw.rect(0,0,CW,CH);
 
-    Draw.gameText(
-      'GAMEOVER',100,80,0,-2,4,50,false,false,this.titleOffset,
-      0.3,0.3,0.3,0,1,2,200,55
-    );
-
-    Draw.gameText(
-      'PRESS R TO CONTINUE',40,80,0,2.5,4,50,true,false,this.titleOffset,
-      0.3,0.3,0.3,0,1,2,200,55
-    );
+    this.title.draw()
+    this.subtitle.draw()
 
   }
 
@@ -247,24 +264,28 @@ class PauseState extends State {
   constructor(level,changeState){
     super(level,changeState);
 
+    // text level
+    this.title = new ElectronText(CW/2,CH/2,'FROZEN!','futurist',180,'center',200,55,50,50,null)
+    this.title.useCamera = false;
+    this.title.printDelay = 10;
+    this.title.setColour(new Colour(255,100,100));
+
   }
 
-  update(deltaTime){}
+  setup(){
+    this.title.reset();
+  }
 
-  draw(){
+  update(deltaTime){
+    this.title.update(deltaTime);
+  }
+
+  draw(camera){
 
     Draw.fill(51,51,51,0.5);
     Draw.rect(0,0,CW,CH);
 
-    Draw.gameText(
-      'PAUSED',100,80,0,-2,4,50,false,false,this.titleOffset,
-      0.3,0.3,0.3,1,2,4,127,127
-    );
-
-    Draw.gameText(
-      'PRESS P / ESC TO CONTINUE',40,80,0,2,4,50,true,false,this.titleOffset,
-      0.3,0.3,0.3,1,2,4,127,127
-    );
+    this.title.draw(camera);
 
 
   }
@@ -283,7 +304,7 @@ class LevelSwitchState extends State {
 
   setup(){
 
-    this.timer = new LevelTimer(2000,-1,false,new SAT.Vector(100,100));
+    this.timer = new LevelTimer(10,-1,false,new SAT.Vector(100,100));
 
     this.hud = new HUD(null,this.timer);
 

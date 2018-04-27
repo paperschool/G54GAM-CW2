@@ -56,6 +56,14 @@ class Utility {
     return phi > 180 ? 360 - phi : phi;
   }
 
+  static normaliseDegrees(angle){
+    return (angle % 360) < 0 ? (angle % 360) + 360 : (angle % 360)
+  }
+
+  static normaliseRadians(angle){
+    return (angle % (2*Math.PI) ) < 0 ? (angle % (2*Math.PI) ) + (2*Math.PI) : (angle % (2*Math.PI) )
+  }
+
   // returns a random float between @min and @max
   static Random(min,max){
     return Math.random() * (max - min) + min;

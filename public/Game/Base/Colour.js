@@ -45,7 +45,8 @@ class Colour {
   }
 
   getHex(){
-    return "#" + (Utility.Map(this.a,0,1,0,255) << 8).toString(16) + ((Math.floor(this.r) << 16) + (Math.floor(this.g) << 8) + Math.floor(this.b)).toString(16).slice(1);
+    // return "#" + (Utility.Map(this.a,0,1,0,255) << 8).toString(16) + ((Math.floor(this.r) << 16) + (Math.floor(this.g) << 8) + Math.floor(this.b)).toString(16).slice(1);
+    return "#" + ((Math.floor(this.r) << 16) + (Math.floor(this.g) << 8) + Math.floor(this.b)).toString(16).slice(1);
   }
 
   getRGBA(){

@@ -38,7 +38,8 @@ class World {
 
     // set of exemplar levels
     this.levelManager.loadLevel("Game/Assets/Levels/1.json",0,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/1.json",1,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/2.json",1,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/3.json",3,this.addLevelData.bind(this));
 
     this.currentLevel = -1;
 
@@ -125,9 +126,18 @@ class World {
         default: break;
       }
 
-      newLevel.cores.addCore(
+      let nCore = newLevel.cores.addCore(
         x,y,r,core.properties
       )
+
+      // performing orbital addition
+      if(core.orbitals){
+
+        for(let orbital of core.orbitals){
+          newLevel.orbitals.addOrbital(nCore,orbital)
+        }
+
+      }
 
     }
 
