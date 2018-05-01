@@ -1,6 +1,6 @@
 class LevelTimer {
 
-  constructor(duration,direction = -1,renderable,size = {x:0,y:0},pos = {x:0,y:0}){
+  constructor(duration,direction = -1,renderable){
 
     this.direction = direction;
 
@@ -38,7 +38,7 @@ class LevelTimer {
     this.paused = false;
 
     // size of timer?
-    this.size = new SAT.Vector(size.x,size.y);
+    // this.size = new SAT.Vector(size.x || 0 ,size.y || 0);
 
     // renders within the class
     this.renderable = renderable || false;
@@ -64,8 +64,6 @@ class LevelTimer {
     return this.timeMillis;
   }
 
-
-
   pauseTimer(){
     this.pauseTime = Date.now();
     this.paused = true;
@@ -83,30 +81,9 @@ class LevelTimer {
       this.getFormatTime();
     }
 
-
   }
 
-  draw(camera){
-
-    // if(this.renderable){
-    //   // Draw.fill(0,0,0,(this.isEnded() ? 0.0 : 0.9));
-    //   Draw.fillHex(gameTheme['TIMER']);
-    //   if(this.isEnded() && !this.paused){
-    //     // needs to be formated
-    //   } else {
-    //     Draw.fill(51,51,51);
-    //     Draw.text(150,"wdata","left",new SAT.Vector((this.size.x/2)-330 + 10,160),this.timeMinute);
-    //     Draw.text(150,"wdata","left",new SAT.Vector((this.size.x/2)-330 + 230,160),this.timeSecond);
-    //     Draw.text(150,"wdata","left",new SAT.Vector((this.size.x/2)-330 + 450,160),this.timeMillis);
-    //     // Draw.fillHex(gameTheme['TIMER']);
-    //     Draw.fill(255,255,255);
-    //     Draw.text(150,"wdata","left",new SAT.Vector((this.size.x/2)-330 + 0,150),this.timeMinute);
-    //     Draw.text(150,"wdata","left",new SAT.Vector((this.size.x/2)-330 + 220,150),this.timeSecond);
-    //     Draw.text(150,"wdata","left",new SAT.Vector((this.size.x/2)-330 + 440,150),this.timeMillis);
-    //   }
-    // }
-
-  }
+  draw(camera){}
 
   getPercentageComplete(){
     return (this.isEnded() ? 1 : (1.0 / this.duration) * (Date.now() - this.startTime) );
@@ -116,7 +93,6 @@ class LevelTimer {
 
     let time = new Date(this.startTime - Date.now() + this.duration);
 
-    // hour = (hour > 9 ? hour : "0" + hour);
     this.timeMinute = (time.getMinutes()  > 9 ? time.getMinutes() : "0" + time.getMinutes());
     this.timeSecond = (time.getSeconds()  > 9 ? time.getSeconds() : "0" + time.getSeconds());
     this.timeMillis = (time.getMilliseconds() > 99 ? "0" + time.getMilliseconds() : time.getMilliseconds() > 9 ? "00" + time.getMilliseconds() : "000" + time.getMilliseconds());

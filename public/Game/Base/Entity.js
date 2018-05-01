@@ -80,13 +80,38 @@ class Rectangle extends Entity {
     super(x,y,w,h);
   }
 
+  // getting vectors of all relevent positions
+  getTopLeft(){
+    return new SAT.Vector(this.pos.x,this.pos.y);
+  }
+
+  getTopRight(){
+    return new SAT.Vector(this.pos.x+this.size.x,this.pos.y);
+  }
+
+  getBottomLeft(){
+    return new SAT.Vector(this.pos.x,this.pos.y+this.size.y);
+  }
+
+  getBottomRight(){
+    return new SAT.Vector(this.pos.x+this.size.x,this.pos.y+this.size.y);
+  }
+
   update(deltaTime){
     super.update(deltaTime);
   }
 
   draw(camera){
+
     Draw.fillCol(this.colour);
-    Draw.rect(this.pos.x-camera.x,this.pos.y-camera.y,this.size.x,this.size.y);
+
+    Draw.rect(
+      this.pos.x-camera.x,
+      this.pos.y-camera.y,
+      this.size.x,
+      this.size.y
+    );
+
   }
 
   area(){
@@ -94,7 +119,11 @@ class Rectangle extends Entity {
   }
 
   checkPointInRectangle(otherPoint){
-    return (otherPoint.x > this.pos.x && otherPoint.x < this.pos.x + this.size.x && otherPoint.y > this.pos.y && otherPoint.y < this.pos.y + this.size.y);
+    return (otherPoint.x > this.pos.x &&
+            otherPoint.x < this.pos.x + this.size.x &&
+            otherPoint.y > this.pos.y &&
+            otherPoint.y < this.pos.y + this.size.y
+          );
   }
 
   checkRectangleinRectangle(rectangle){

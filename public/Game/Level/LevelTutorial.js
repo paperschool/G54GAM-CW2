@@ -19,8 +19,6 @@ class LevelTutorial {
     this.player.setCanMoveLeft(true);
     this.player.setCanMoveRight(false);
 
-    this.snow = new EnvironmentalParticleSystem(this,this.player,new SAT.Vector(0.5,0.1),400,new SAT.Vector(10000,10000));
-
     input.setCallBack(InputKeys.SPACE,'tutorial-level-exit',(function(){
 
       if(this.cores.end.getPlayerCollided() && this.levelState === LevelState.CAN_EXIT){
@@ -29,6 +27,15 @@ class LevelTutorial {
       }
 
     }).bind(this));
+
+    // environmental particle system
+    this.snow = new EnvironmentalParticleSystem(this,this.player,new SAT.Vector(0.5,0.1),400,new SAT.Vector(10000,10000));
+
+    // particle system
+    this.particleSystem = new ParticleSystem();
+
+    // storm class
+    this.storm = new Storm(this,30000,10000);
 
     // manager or origin cores
     this.cores = new CoreManager(this);
@@ -46,7 +53,6 @@ class LevelTutorial {
     this.colour.setG(100,200);
     this.colour.setB(100,200);
 
-
     this.tutorialTextIndex = 0;
     this.tutorialtext = [
       'PRESS LEFT TO MOVE LEFT',
@@ -57,7 +63,7 @@ class LevelTutorial {
     // text level
     this.leveltext = new ElectronText(0,0,this.tutorialtext[this.tutorialTextIndex],'futurist',25,'center',40,35,50,50,null)
 
-    this.leveltext.printDelay = 50;
+    this.leveltext.printDelay = 20;
 
     input.setCallBack(InputKeys.LEFT,'tutorial-level-left',(function(){
 
@@ -87,6 +93,20 @@ class LevelTutorial {
 
     }).bind(this));
 
+    this.setLevelInvert(false);
+
+    input.setCallBack(InputKeys.DOWN,'tutorial-level-core-drop',(function(){
+      this.setLevelInvert(true);
+      this.player.setDive(true);
+    }).bind(this));
+
+    input.setCallBack(InputKeys.UP,'tutorial-level-core-rise',(function(){
+      this.setLevelInvert(false);
+      this.player.setDive(false);
+    }).bind(this));
+
+
+
   }
 
   // method to set up initial level settings
@@ -108,13 +128,27 @@ class LevelTutorial {
 
   }
 
+  getLevelInvert(){
+    return this.levelInvert;
+  }
+
+  setLevelInvert(levelInvert){
+    this.levelInvert = levelInvert;
+  }
+
   update(deltaTime){
 
     this.colour.step();
 
+    // this.camera.resetShake(3);
+
     this.camera.update(deltaTime);
 
     this.timer.update(deltaTime);
+
+    this.storm.update(deltaTime);
+
+    this.particleSystem.update(deltaTime);
 
     this.cores.update(deltaTime);
 
@@ -125,6 +159,7 @@ class LevelTutorial {
 
     this.snow.update(deltaTime);
 
+    //
     if(this.levelState === LevelState.CAN_EXIT){
       this.player.getPos().set(this.cores.end.getPos());
       this.player.setVel(new SAT.Vector(0,0));
@@ -146,11 +181,23 @@ class LevelTutorial {
 
     Draw.rect(0,0,CW,CH);
 
-    this.snow.draw(camera);
+    if(this.levelInvert){
+      Draw.fillCol(new Colour(255,255,255,0.5));
+      Draw.rect(0,0,CW,CH);
+      this.orbitals.draw(camera);
+      this.cores.draw(camera);
+      this.snow.draw(camera);
+    } else {
 
-    this.cores.draw(camera);
+      this.snow.draw(camera);
+      this.cores.draw(camera);
+      this.orbitals.draw(camera);
 
-    this.orbitals.draw(camera);
+    }
+
+    this.storm.draw(camera);
+
+    this.particleSystem.draw(camera);
 
     this.player.draw(camera);
 
@@ -176,11 +223,6 @@ class LevelTutorial {
       }
 
     }
-
-
-    // if(this.timer.isEnded()){
-    //   this.levelState = LevelState.TIMEOUT;
-    // }
 
   }
 

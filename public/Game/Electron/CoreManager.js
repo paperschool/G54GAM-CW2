@@ -19,7 +19,7 @@ class CoreManager {
 
       let currentCore = this.player.getCore();
 
-      if(currentCore.getCanJump()){
+      if(currentCore.getCanJump() && !this.player.getDive()){
         currentCore.jump(this.player,this.player.getDirection()+180);
       }
 
@@ -102,25 +102,31 @@ class CoreManager {
 
   drawHighlight(camera){
 
+    // storing reference to player
     let player = this.level.player;
 
+    // calculating angle between both points
     let angle = Utility.signedPolarAngleDifference(this.end.getDirection(),player.getDirection());
 
-    // let sign =  Utility.signPolarAngleDifference(this.end.properties.end.angle,player.getDirection());
+    // figuring out direction of highlight
+    let sign = Math.sign(angle)
 
-    for(let dot = 0 ; dot < angle ; dot+=5 ){
+    let highlightRadius = this.end.getCore().getRadius()+(Sizes.PLAYER.unit+Sizes.MARGIN.unit)*(player.getDive() ? -1 : 1)
+
+    for(let dot = 0 ; dot < Math.abs(angle) ; dot+=3 ){
 
       let pos = this.end.getPolarVector(
         this.end.getCore().getPos(),
-        dot+player.getDirection(),
-        this.end.getCore().getRadius()+Sizes.PLAYER.unit+Sizes.MARGIN.unit
+        (dot*sign)+player.getDirection(),
+        highlightRadius
       );
 
-      Draw.fill(255,255,255);
+      Draw.fillCol(new Colour(255,255,255,Utility.Map(dot,0,Math.abs(angle),0,1)));
       Draw.circle(
         pos.x-camera.x,
         pos.y-camera.y,
-        5);
+        Utility.Map(dot,0,Math.abs(angle),8,1)
+      );
 
     }
 

@@ -61,6 +61,9 @@ class ParticleSystem {
       case ParticleType.GLITTER:
         this.particles.push(new Particle_Glitter(x,y,d));
         break;
+      case ParticleType.ION:
+        this.particles.push(new Particle_Ionisation(x,y,d));
+        break;
     }
 
   }
@@ -104,32 +107,6 @@ class Particle extends Entity {
 
     Draw.fillCol(this.colour);
     Draw.circle(this.pos.x-camera.x,this.pos.y-camera.y,this.size.x);
-
-  }
-
-}
-
-class Snow {
-
-  constructor(){
-
-    this.flakes = [];
-
-    for(let flake = 0 ; flake < 1000 ; flake++){
-      this.flakes.push(new Flake());
-    }
-
-  }
-
-  update(deltaTime){
-
-    super.update(deltaTime);
-
-  }
-
-  draw(camera){
-
-    super.draw(camera);
 
   }
 
@@ -429,6 +406,83 @@ class Glitter extends Circle {
 
   draw(camera){
     super.draw(camera);
+  }
+
+}
+
+class Particle_Ionisation extends Particle {
+
+  constructor(x,y,d){
+    super(x,y);
+
+    // sound.play(SoundLabel.FIREWORK);
+
+    this.ions = [];
+
+    let count = Utility.Random(4,2)
+
+    for(var i = 0 ; i < count ; i++) {
+      this.ions.push(new Particle_Ions(x,y,Utility.Random(5,30),Utility.Random(d-50,d+50)));
+    }
+
+    this.life = 20;
+
+  }
+
+  update(deltaTime){
+
+    super.update(deltaTime);
+
+    for(let ion of this.ions){
+      ion.update(deltaTime);
+    }
+
+  }
+
+  draw(camera){
+    for(let ion of this.ions){
+      ion.draw(camera);
+    }
+  }
+
+}
+
+
+class Particle_Ions extends Circle {
+
+  constructor(x,y,s,d){
+
+    super(x,y,s);
+
+    this.velocity = new SAT.Vector(
+      Math.cos(Utility.Radians(d))*Utility.Random(1,20),
+      Math.sin(Utility.Radians(d))*Utility.Random(1,20)
+    );
+
+    this.setColour(new Colour().randomGrey(150,255));
+
+    this.getColour().setA(0.6);
+
+    this.life = 200;
+
+  }
+
+  update(deltaTime){
+
+    this.life--;
+
+    this.getPos().add(this.velocity);
+
+    this.getPos().add({x:Utility.Random(-1,1),y:Utility.Random(-1,1)})
+
+    this.getSize().x *= 0.99
+
+  }
+
+  draw(camera){
+    // Draw.resetStroke();
+    Draw.stroke(2,new Colour(255,255,255).getRGBA())
+    Draw.circleOutline(this.pos.x-camera.x,this.pos.y-camera.y,this.size.x)
   }
 
 }

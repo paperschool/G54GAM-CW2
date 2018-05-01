@@ -42,6 +42,10 @@ class Utility {
     );
   }
 
+  static shortestAngleDifference(a,b){
+    return ( ( a-b )  + 180 ) % 360 - 180 ; 
+  }
+
   static signPolarAngleDifference(a,b){
     return (a - b >= 0 && a - b < 180) || ( a - b <= -180 && a - b >= -360 ) ? 1 : -1;
   }
@@ -55,6 +59,40 @@ class Utility {
     let phi = Math.abs(b-a) % 360;
     return phi > 180 ? 360 - phi : phi;
   }
+
+  // this will return a number representing the quadrant of a circle
+  // with degrees
+  static circularQuadrantDegree(angle){
+    return Utility.circularQuadrant(Utility.Radians(angle));
+  }
+
+  // this will return a number representing the quadrant of a circle
+  // 0->90 being 1, 90->180 being 2, 180->270 being 3 and 270->360 being 4
+  static circularQuadrant(angle){
+
+    // returning remainder if greater than 360
+    if(angle > Math.PI*2){
+      angle = angle % Math.PI*2;
+    }
+
+    if(Math.PI/2 > angle && angle >= 0){
+      return 1;
+    }
+
+    if(Math.PI > angle && angle >= Math.PI/2){
+      return 2;
+    }
+
+    if(Math.PI*3/2 > angle && angle >= Math.PI){
+      return 3;
+    }
+
+    if(Math.PI*2 > angle && angle >= Math.PI*3/2){
+      return 4;
+    }
+
+  }
+
 
   static normaliseDegrees(angle){
     return (angle % 360) < 0 ? (angle % 360) + 360 : (angle % 360)
@@ -388,7 +426,7 @@ class Draw {
   static resetStroke(){
     if(Draw.checkGame()){
       game.ctx.lineWidth = 0;
-      game.ctx.steokStyle = '#000000'
+      game.ctx.strokeStyle = "rgba(1, 1, 1, 0)";
     }
   }
 

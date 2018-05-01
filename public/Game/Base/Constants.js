@@ -2,7 +2,7 @@
 var Sizes = {
   MARGIN     : { id:"margin", unit:50,  scalar:1 },
   PLAYER     : { id:"player", unit:50,  scalar:1 },
-  ENEMY      : { id:"enemy",  unit:50,  scalar:1 },
+  ENEMY      : { id:"enemy",  unit:30,  scalar:1 },
   TUNNEL     : { id:"tunnel", unit:70,  scalar:1 },
   UNIT       : { id:"unit",   unit:400, scalar:1 },
   CORE_SMALL : { id:"small",  unit:400, scalar:1 },
@@ -57,7 +57,8 @@ var ParticleType = {
   GUNSMOKE :5,
   FIREWORK :6,
   GLITTER  :7,
-  SNOW     :8
+  SNOW     :8,
+  ION      :9
 }
 
 var AgentType = {

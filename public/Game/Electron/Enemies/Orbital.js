@@ -6,7 +6,9 @@ class Orbital extends Electron {
 
     this.level = level;
 
-    this.setSpeed(properties.speed || 1.5);
+    this.setColour(new Colour(255,100,100));
+
+    this.setSpeed(properties.speed || 1);
 
     this.setOrbitDirection(properties.direction || -1)
 
@@ -22,6 +24,7 @@ class Orbital extends Electron {
 
     this.setCollider(new CircularCollider(this.getPos().x,this.getPos().y,this.getRadius()));
 
+
   }
 
   getOrbitDirection(){
@@ -36,8 +39,8 @@ class Orbital extends Electron {
     this.orbitDirection = orbitDirection;
   }
 
-  setRadiusOffset(orbitOffset){
-    this.orbitOffset = orbitOffset;
+  setRadiusOffset(radiusOffset){
+    this.radiusOffset = radiusOffset;
   }
 
   // TODO: Fix poor association to parent class
@@ -46,7 +49,7 @@ class Orbital extends Electron {
     // calculating angle of player relative to mouse (Kinda hacky as i know player is centered)
     // this.calculateDirection({x:CW/2,y:CH/2},input.mouse);
 
-    this.getRadiusOffset(Utility.Random(-5,5));
+    this.setRadiusOffset(Utility.Random(-5,5));
 
     this.applyImpulse(new SAT.Vector(this.getSpeed()*this.getOrbitDirection(),0));
 
@@ -60,7 +63,7 @@ class Orbital extends Electron {
 
   draw(camera){
 
-    Draw.fillCol(new Colour(255,100,100));
+    Draw.fillCol(this.getColour());
     Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius()+this.getRadiusOffset());
 
   }

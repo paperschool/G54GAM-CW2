@@ -28,6 +28,8 @@ class ElectronText extends Entity {
 
     this.useCamera = true;
 
+    this.shadowPosition = new SAT.Vector(0,0);
+
     this.printIndex = 0;
     this.printDelay = 100;
     this.printLastTime = Date.now();
@@ -63,39 +65,9 @@ class ElectronText extends Entity {
 
   draw(camera){
 
-    // Draw.fill(150,150,255);
-    // Draw.rect(
-    //   this.getPos().x-this.centerOffset.x-camera.x-(this.marginx/2),
-    //   this.getPos().y-this.centerOffset.y-camera.y-(this.marginy/2),
-    //   ((this.text.length-1)*this.spacing)+this.marginx,
-    //   this.height/2+this.marginy/2
-    // );
-
-
-    // Draw.line(
-    //   this.center.x-camera.x,this.center.y-camera.y,
-    //   this.center.x-camera.x,this.center.y-camera.y-this.height)
-    //
-    // Draw.line(
-    //   this.center.x-camera.x,this.center.y-camera.y,
-    //   this.center.x-camera.x+100,this.center.y-camera.y)
-    //
-    // ///////////
-    //
-    // Draw.fill(51,51,51);
-    // Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,10);
-    //
-    // Draw.line(
-    //   this.getPos().x-camera.x,this.getPos().y-camera.y,
-    //   this.getPos().x-camera.x,this.getPos().y-camera.y-this.height)
-    //
-    // Draw.line(
-    //   this.getPos().x-camera.x,this.getPos().y-camera.y,
-    //   this.getPos().x-camera.x+100,this.getPos().y-camera.y)
-
-
     Draw.fillCol(this.getColour());
     for(let c = 0 ; c < this.printIndex ; c++){
+
       Draw.text(
         this.fontsize,
         this.font,
@@ -103,6 +75,17 @@ class ElectronText extends Entity {
         new SAT.Vector(
           this.getPos().x-this.centerOffset.x+(c*this.spacing) - ( this.useCamera ? camera.x : 0 ),
           this.getPos().y-this.centerOffset.y                  - ( this.useCamera ? camera.y : 0 )
+        ),
+        this.text.charAt(c)
+        );
+
+      Draw.text(
+        this.fontsize,
+        this.font,
+        this.alignment,
+        new SAT.Vector(
+          this.shadowPosition.x+this.getPos().x-this.centerOffset.x+(c*this.spacing) - ( this.useCamera ? camera.x : 0 ),
+          this.shadowPosition.y+this.getPos().y-this.centerOffset.y                  - ( this.useCamera ? camera.y : 0 )
         ),
         this.text.charAt(c)
         );

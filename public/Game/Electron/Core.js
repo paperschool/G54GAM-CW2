@@ -121,12 +121,14 @@ class Core extends Actor {
     // angle joining the two cores
     let connectingAngle = Utility.angle(this.getPos(),other.getPos());
 
-    // checking side of circle is correct
-    let sideCheck = (playerAngle > (Math.PI*3/2)) && playerAngle <= (Math.PI*2) ||
-                    (playerAngle < (Math.PI/2  )) && playerAngle >= (0);
+    let side = Utility.circularQuadrantDegree(this.getDirection());
+
+    // // checking side of circle is correct
+    // let sideCheck = (playerAngle > (Math.PI*3/2)) && playerAngle <= (Math.PI*2) ||
+    //                 (playerAngle < (Math.PI/2  )) && playerAngle >= (0);
 
     // special case for when player sits on angle between 360 -> 0
-    if(Math.abs(connectingAngle) === 0 && sideCheck){
+    if(Math.abs(connectingAngle) === 0 && (side === 1 || side === 4) ){
 
       // normalising angle to bring into negative range again
       playerAngle = playerAngle > Math.PI ? playerAngle-2*Math.PI : playerAngle;
@@ -155,11 +157,24 @@ class Core extends Actor {
 
     let direction = d || other.getDirection();
 
-    return this.getPolarVector(
-      this.getPos(),
-      direction,
-      (this.getRadius() + other.getRadius() + other.getMargin())
-    );
+    // defining dive behaviour
+    if(other.getDive()){
+
+      return this.getPolarVector(
+        this.getPos(),
+        direction,
+        (this.getRadius() - (other.getRadius() + other.getMargin()))
+      );
+
+    } else {
+
+      return this.getPolarVector(
+        this.getPos(),
+        direction,
+        (this.getRadius() + other.getRadius() + other.getMargin())
+      );
+
+    }
 
   }
 
@@ -167,15 +182,14 @@ class Core extends Actor {
   jump(other,angle){
     if(this.getJumpCore()){
       this.migrateCore(this.getJumpCore(),other,angle);
-      other.getVel().x *= -1;
+      // other.updateQuadrantDirection(true);
+      // other.getVel().x *= -1;
     }
   }
 
   update(deltaTime){
 
     super.update(deltaTime);
-
-    let player = this.level.player;
 
     if(this.end){
       this.end = this.getPolarVector(
@@ -191,19 +205,34 @@ class Core extends Actor {
 
     super.draw(camera);
 
-    Draw.fill(255,255,255);
-    Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
+
     Draw.resetStroke();
+
+
+    if(this.level.getLevelInvert()){
+      Draw.fillCol(this.level.colour.getColour().setA(1));
+    } else {
+      Draw.fill(255,255,255,0.5);
+    }
+
+    Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
+
+    Draw.stroke(3,new Colour(255,255,255).getRGBA());
+    Draw.circleOutline(
+      this.getPos().x-camera.x,
+      this.getPos().y-camera.y,
+      this.getRadius()
+    )
 
     // debug
 
     let pCore = this.level.player.getCore();
+
     let cCore = pCore.getJumpCore();
 
     let player = this.level.player;
 
     if(cCore && pCore.getCanJump()){
-
 
       let alternativeOffset = cCore.getOrbitPosition(this.level.player,this.level.player.getDirection()+180);
 
@@ -217,7 +246,7 @@ class Core extends Actor {
       //   Utility.Map(jumpAngleDistance,0,Utility.Radians(this.getJumpAccurracy()),1,0)
       // );
 
-      Draw.strokeCol(1,colour.getHex());
+      Draw.stroke(3,colour.getRGBA());
       Draw.circleOutline(
         alternativeOffset.x-camera.x,
         alternativeOffset.y-camera.y,

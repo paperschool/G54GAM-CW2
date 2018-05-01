@@ -1,7 +1,8 @@
 {
   "level":{
     "properties":{
-      "tutorial": true
+      "tutorial": true,
+      "storm":false
     },
     "size":{
       "x":100,
@@ -17,16 +18,22 @@
       },
       { "x":0,"y":4,"type":"medium","properties":{},
         "orbitals":[
-          { "angle":0,"speed":0,"direction":-1 },
-          { "angle":60,"speed":0,"direction":-1 },
-          { "angle":120,"speed":0,"direction":-1 },
-          { "angle":180,"speed":0,"direction":-1 },
-          { "angle":240,"speed":0,"direction":-1 },
-          { "angle":300,"speed":0,"direction":-1 },
-          { "angle":360,"speed":0,"direction":-1 }
+          { "type":"generic","angle":0,"speed":0,"direction":-1 },
+          { "type":"generic","angle":60,"speed":0,"direction":-1 },
+          { "type":"generic","angle":120,"speed":0,"direction":-1 },
+          { "type":"generic","angle":180,"speed":0,"direction":-1 },
+          { "type":"generic","angle":240,"speed":0,"direction":-1 },
+          { "type":"generic","angle":300,"speed":0,"direction":-1 }
         ]
       },
-      { "x":4,"y":4,"type":"small","properties":{ "end":{ "angle":90 } } }
+      { "x":4,"y":4,"type":"small","properties":{ "end":{ "angle":90 } },
+        "orbitals":[
+          { "type":"teleporting","angle":225,"timeout":1000,"speed":0,"direction":-1,
+            "teleports": [ 225 , 45 ] },
+          { "type":"teleporting","angle":135,"timeout":1000,"speed":0,"direction":-1,
+            "teleports": [ 135 , 315 ] }
+        ]
+      }
     ]
   }
 }

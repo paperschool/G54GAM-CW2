@@ -26,18 +26,22 @@ class Colour {
 
   setR(r){
     this.r = r;
+    return this;
   }
 
   setG(g){
     this.g = g;
+    return this;
   }
 
   setB(b){
     this.b = b;
+    return this;
   }
 
   setA(a){
     this.a = a;
+    return this;
   }
 
   getHexComponent(v){
@@ -184,6 +188,10 @@ class PulseColour {
   setB(min = 0, max = 255){
     this.minb = min;
     this.maxb = max;
+  }
+
+  getRGBA(){
+    return 'rgb('+this.base.getA()+','+Math.floor(this.base.r)+','+Math.floor(this.base.g)+','+Math.floor(this.base.b)+','+this.base.a+')';
   }
 
   step(inc = 0.01){

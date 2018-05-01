@@ -39,7 +39,7 @@ class World {
     // set of exemplar levels
     this.levelManager.loadLevel("Game/Assets/Levels/1.json",0,this.addLevelData.bind(this));
     this.levelManager.loadLevel("Game/Assets/Levels/2.json",1,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/3.json",3,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/3.json",2,this.addLevelData.bind(this));
 
     this.currentLevel = -1;
 

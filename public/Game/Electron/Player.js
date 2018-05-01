@@ -19,7 +19,17 @@ class Player extends Electron {
 
     this.setCollider(new CircularCollider(this.getPos().x,this.getPos().y,this.getRadius()));
 
+    this.setLife(3);
+
+    this.setLifespan(3);
+
+    this.setQuadrantDirection(-1)
+
     this.canExit = false;
+
+    this.beingDamaged = false;
+
+
 
   }
 
@@ -27,14 +37,47 @@ class Player extends Electron {
     return this.invincible;
   }
 
+  getQuadrantDirection(){
+    return this.quadrantDirection;
+  }
+
   setCanMoveLeft(canMoveLeft){
     this.canMoveLeft = canMoveLeft;
   }
 
-  applyDamage(damage){
-    if(!this.invincible){
-      this.getLife()-=damage;
+  setQuadrantDirection(quadrantDirection){
+    this.quadrantDirection = quadrantDirection;
+  }
+
+  // experimental feature
+  updateQuadrantDirection(force){
+
+    if(!force && input.isDown(InputKeys.LEFT) || input.isDown(InputKeys.RIGHT)) {
+      return;
     }
+
+    let playerQuadrant = Utility.circularQuadrantDegree(this.getDirection());
+
+    if( playerQuadrant === 3 || playerQuadrant === 4 ) {
+        this.setQuadrantDirection(-1);
+    }
+
+    if( playerQuadrant === 1 || playerQuadrant === 2 ) {
+          this.setQuadrantDirection(1);
+    }
+
+  }
+
+  applyDamage(damage){
+
+    if(!this.invincible){
+
+      if(!this.beingDamaged){
+        this.setLife(this.getLife()-damage);
+      }
+
+    }
+
   }
 
 
@@ -48,11 +91,14 @@ class Player extends Electron {
     if(input.isDown(InputKeys.DOWN)) this.applyImpulse(new SAT.Vector(0.0,this.speed));
 
     // if left is pressed apply a negative horizontal acc
-    if(input.isDown(InputKeys.LEFT) && this.getCanMoveLeft()) this.applyImpulse(new SAT.Vector(-this.speed,0.0));
+    if(input.isDown(InputKeys.LEFT) && this.getCanMoveLeft()){
+       this.applyImpulse(new SAT.Vector(this.getQuadrantDirection()*this.getSpeed(),0.0));
+    }
 
     // if right is pressed apply a positive horizontal acc
-    if(input.isDown(InputKeys.RIGHT) && this.getCanMoveRight()) this.applyImpulse(new SAT.Vector(this.speed,0.0));
-
+    if(input.isDown(InputKeys.RIGHT) && this.getCanMoveRight()){
+       this.applyImpulse(new SAT.Vector(this.getQuadrantDirection()*-this.getSpeed(),0.0));
+    }
   }
 
   // method given to player only for checking input states
@@ -87,11 +133,15 @@ class Player extends Electron {
 
     this.checkMouseInput();
 
+    // this.updateQuadrantDirection(false);
+
     super.update(deltaTime);
 
     this.setCollider(new CircularCollider(this.getPos().x,this.getPos().y,this.getRadius()));
 
     if(this.getLife() <= 0) this.setAlive(false);
+
+    // console.log(this.getDirection(),Utility.circularQuadrantDegree(this.getDirection()));
 
     diagnostic.updateLine("Direction: ",this.getDirection());
     // diagnostic.updateLine("Vel: ",Math.round(Utility.pyth(this.vel.x,this.vel.y) * 1000) / 1000);
@@ -102,8 +152,29 @@ class Player extends Electron {
 
     if(this.canExit){
 
-      Draw.fill(100,255,100);
-      Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
+      Draw.strokeCol(4,new Colour(255,255,255));
+
+      for(let life = this.getLife() ; life >= 0 ; life--){
+
+        let radius = this.getRadius()*Utility.Map(life,0,this.getLifespan(),1,0);
+
+        let pos = this.getCore().getOrbitPosition(
+          this,
+          this.getDirection() + this.getVel().x*Utility.Map(life,0,this.getLifespan(),3,0)
+        );
+
+        Draw.circleOutline(
+          pos.x - camera.x,
+          pos.y - camera.y,
+          radius
+        );
+
+      }
+
+      Draw.resetStroke();
+
+      // Draw.fill(100,255,100);
+      // Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
 
     } else {
 

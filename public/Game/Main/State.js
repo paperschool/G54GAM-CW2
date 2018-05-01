@@ -25,8 +25,7 @@ class State {
 
 }
 
-
-class StartState extends State{
+class StartState        extends State {
 
   constructor(level,changeState){
     super(level,changeState);
@@ -47,19 +46,21 @@ class StartState extends State{
     this.title.useCamera = false;
     this.title.printDelay = 250;
     this.title.setColour(new Colour(255,255,255));
+    this.title.shadowPosition = new SAT.Vector(10,10);
 
-    this.title2 = new ElectronText((CW/2)+5,(CH/2)+5,'ELECTRON','futurist',230,'center',200,55,50,50,null)
-    this.title2.useCamera = false;
-    this.title2.printDelay = 200;
+    this.subtitle = new ElectronText(CW/2,CH*2/3,'PRESS SPACE','futurist',90,'center',80,55,50,50,null)
+    this.subtitle.useCamera = false;
+    this.subtitle.printDelay = 200;
+    this.subtitle.setColour(new Colour(255,255,255));
+    this.subtitle.shadowPosition = new SAT.Vector(5,5);
 
-    this.ParticleSystem = new ParticleSystem();
-    this.titleOffset = 0;
-    this.secondaryOffset = 0;
 
   }
 
   setup(){
     sound.play(SoundLabel.START_STATE_MUSIC);
+    this.title.reset();
+    this.subtitle.reset();
   }
 
   setReady(){
@@ -70,25 +71,12 @@ class StartState extends State{
 
     this.colour.step();
     this.colour.getColour().a = 0.4;
-    this.titleOffset = this.titleOffset < 360 ? this.titleOffset+4 : 0;
 
     this.title.update(deltaTime);
-    this.title2.update(deltaTime);
+    this.subtitle.update(deltaTime);
 
     this.snow.update(deltaTime);
 
-    if(Utility.Random(0,100) < 5){
-      this.ParticleSystem.addParticle(
-        Utility.Random(100,CW-100),
-        Utility.Random(100,CH-100),
-        Utility.Random(10,100),
-        ParticleType.FIREWORK
-      )
-    }
-
-    this.ParticleSystem.update(deltaTime);
-
-    this.secondaryOffset += 1;
   }
 
   draw(){
@@ -98,18 +86,17 @@ class StartState extends State{
 
     this.snow.draw({x:CW/2,y:CH/2});
 
-    this.title2.draw({x:CW/2,y:CH/2});
     this.title.draw({x:CW/2,y:CH/2});
 
-    if(this.ready){}
-
+    if(this.ready){
+      this.subtitle.draw({x:CW/2,y:CH/2});
+    }
 
   }
 
-
 }
 
-class PlayState extends State{
+class PlayState         extends State {
 
   constructor(level,changeState,reloadLevel,nextLevel) {
 
@@ -159,8 +146,7 @@ class PlayState extends State{
 
 }
 
-
-class GameOverState extends State {
+class GameOverState     extends State {
 
   constructor(level,changeState,reloadLevel,nextLevel){
 
@@ -177,6 +163,7 @@ class GameOverState extends State {
     this.title.useCamera = false;
     this.title.printDelay = 50;
     this.title.setColour(new Colour(255,100,100));
+    this.title.shadowPosition = new SAT.Vector(10,10);
 
     this.subtitle = new ElectronText(CW/2,CH*2/3,'PRESS R TO TRY AGAIN','futurist',90,'center',80,55,50,50,null)
     this.subtitle.useCamera = false;
@@ -209,7 +196,7 @@ class GameOverState extends State {
 
 }
 
-class VictoryState extends State {
+class VictoryState      extends State {
 
   constructor(level,changeState){
     super(level,changeState);
@@ -221,12 +208,21 @@ class VictoryState extends State {
     this.redirectAttempted = false;
 
     this.colour = new PulseColour(new Colour().random());
+    this.colour.setR(100,255)
+    this.colour.setG(100,255)
+    this.colour.setB(100,255)
+
+    //
+    this.center = new Actor(CW/2,CH/2);
+    this.snow = new EnvironmentalParticleSystem(this,this.center,new SAT.Vector(1,0.5),1000,new SAT.Vector(10000,10000));
 
     // text level
-    this.title = new ElectronText(CW/2,CH/2,'VICTORY!','futurist',230,'center',200,55,50,50,null)
+    this.title = new ElectronText(CW/2,CH/2,'VICTORY!','futurist',180,'center',160,55,50,50,null)
     this.title.useCamera = false;
     this.title.printDelay = 250;
     this.title.setColour(new Colour(255,255,255));
+    this.title.shadowPosition = new SAT.Vector(10,10);
+
 
 
   }
@@ -242,16 +238,17 @@ class VictoryState extends State {
 
     // stuff for testing survey redirect
     // this.timer.update(deltaTime);
-
-    this.title.update(deltaTime)
-
-
+    this.colour.step();
+    this.title.update(deltaTime);
+    this.snow.update(deltaTime);
   }
 
   draw(){
 
-    Draw.fill(51,51,51,0.5);
+    Draw.fillCol(this.colour.getColour());
     Draw.rect(0,0,CW,CH);
+
+    this.snow.draw({x:CW/2,y:CH/2});
 
     this.title.draw()
 
@@ -259,7 +256,7 @@ class VictoryState extends State {
 
 }
 
-class PauseState extends State {
+class PauseState        extends State {
 
   constructor(level,changeState){
     super(level,changeState);
@@ -269,6 +266,7 @@ class PauseState extends State {
     this.title.useCamera = false;
     this.title.printDelay = 10;
     this.title.setColour(new Colour(255,100,100));
+    this.title.shadowPosition = new SAT.Vector(10,10);
 
   }
 
@@ -292,7 +290,7 @@ class PauseState extends State {
 
 }
 
-class LevelSwitchState extends State {
+class LevelSwitchState  extends State {
 
   constructor(level,changeState){
 

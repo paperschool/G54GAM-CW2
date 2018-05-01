@@ -111,11 +111,13 @@ class Tunnel extends Electron {
 
     this.setCollider(new CircularCollider(this.getPos().x,this.getPos().y,this.getRadius()));
 
-
     if(this.getPlayerCollided() && this.type === TunnelType.EXIT){
       this.tunnelText.getPos().x = this.getPos().x;
       this.tunnelText.getPos().y = this.getPos().y + this.getRadius() + this.getMargin()*3;
       this.tunnelText.update(deltaTime);
+      this.level.player.setDirection(this.getDirection());
+      this.level.player.setCanMoveLeft(false);
+      this.level.player.setCanMoveRight(false);
     } else {
       this.checkPlayerCollision();
     }
@@ -129,11 +131,18 @@ class Tunnel extends Electron {
       this.tunnelText.draw(camera);
     }
 
+    Draw.resetStroke();
+
     if(this.getType() === TunnelType.EXIT){
 
-      for(let i = 1 ; i < 11 ; i+=1){
+      for(let i = 11 ; i >= 0 ; i-=1){
 
-        Draw.strokeCol(i/2,this.getColour());
+        Draw.strokeCol(i/2,new Colour(
+          100,
+          255,
+          Utility.Map(i,0,10,0,255)
+        ));
+
         Draw.circleOutline(
           this.getPos().x - camera.x+Utility.Random(-(10-i),(10-i)),
           this.getPos().y - camera.y + Utility.Map(i,0,11,this.getRadius(),0),

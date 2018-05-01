@@ -12,6 +12,10 @@ class Electron extends Actor {
 
     this.setJump(2);
 
+    this.setDive(false);
+
+    this.setDove(false);
+
   }
 
   getCanMoveRight(){
@@ -34,6 +38,14 @@ class Electron extends Actor {
 
   getJump(){
     return this.jump;
+  }
+
+  getDive(){
+    return this.dive;
+  }
+
+  getDove(){
+    return this.dove;
   }
 
   setMargin(margin){
@@ -60,6 +72,14 @@ class Electron extends Actor {
 
   setJump(jump){
     this.jump = jump;
+  }
+
+  setDive(dive){
+    this.dive = dive;
+  }
+
+  setDove(dove){
+    this.dove = dove;
   }
 
   evaluateVelocity(deltaTime){

@@ -128,7 +128,7 @@ class Game {
   draw(deltaTime){
     this.world.draw();
     // chart.draw();
-    // diagnostic.draw();
+    diagnostic.draw();
   }
 
   end(){

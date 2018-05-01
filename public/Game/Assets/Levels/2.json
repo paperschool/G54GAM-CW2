@@ -1,7 +1,8 @@
 {
   "level":{
     "properties":{
-      "tutorial": true
+      "tutorial": true,
+      "storm":false
     },
     "size":{
       "x":100,
