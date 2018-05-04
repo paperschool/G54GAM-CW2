@@ -24,9 +24,9 @@ var GameState = {
 var LevelState = {
   RUNNING:0,
   PLAYER_DEAD:1,
-  CAN_EXIT:3,
-  EXITED:4,
-  TIMEOUT:5
+  EXITING:2,
+  EXITED:3,
+  TIMEOUT:4
 }
 
 var InputKeys = {

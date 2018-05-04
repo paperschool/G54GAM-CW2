@@ -8,6 +8,7 @@ class Storm {
     this.duration = duration;
 
     this.delay = delay;
+    // this.delay = 0;
 
     this.direction = null;
 
@@ -192,6 +193,7 @@ class Storm {
 
         for(let core of this.level.cores.cores){
           if(this.checkIonCollision(ion,core)){
+            this.level.camera.resetShake(10);
             this.killIon(i);
             this.level.particleSystem.addParticle(
               ion.pos.x,
@@ -242,15 +244,19 @@ class Ion extends Actor {
 
     this.setSpeed(1);
 
-    this.setSize(new SAT.Vector(50,100));
+    this.setSize(new SAT.Vector(30,50));
 
-    this.setColour(new Colour(255,Utility.RandomInt(50,220),0));
+    this.setColour(new Colour(255,Utility.RandomInt(150,255),255));
 
     this.end = end;
 
     this.force = force;
 
     this.force.scale(this.getSpeed());
+
+    this.setDirection(
+      Utility.angleDegrees(this.force,this.end)
+    );
 
     this.active = false;
 
@@ -274,16 +280,23 @@ class Ion extends Actor {
 
     Draw.resetStroke();
 
-    for(let trail = 0 ; trail < 5 ; trail++){
-      Draw.fillCol(new Colour(255,Utility.RandomInt(20,220),0,0.5));
-      Draw.circle(
-        this.getPos().x-(this.force.x+Utility.Random(-1,1)*trail*30)-camera.x,
-        this.getPos().y-(this.force.y+Utility.Random(-1,1)*trail*30)-camera.y,
-        Utility.Random(50,this.getSize().x));
-    }
-
     Draw.fillCol(this.getColour());
     Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getSize().x);
+
+    for(let trail = 0 ; trail < 5 ; trail++){
+
+      let shade = Utility.RandomInt(20,220);
+
+      Draw.fillCol(new Colour(shade,shade,shade,0.5));
+
+      let trailPos = Utility.polarVectorDegrees(
+        this.getPos(),
+        this.getDirection()+180+Utility.Random(-80,80),
+        Utility.Random(10,200)
+      );
+
+      Draw.circle(trailPos.x-camera.x,trailPos.y-camera.y,Utility.Random(10,this.getSize().x));
+    }
 
   }
 

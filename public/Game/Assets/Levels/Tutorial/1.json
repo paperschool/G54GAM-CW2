@@ -1,0 +1,22 @@
+{
+  "level":{
+    "properties":{
+      "tutorial": true,
+      "storm":false,
+      "name":"LETS START SLOW"
+    },
+    "size":{
+      "x":100,
+      "y":50
+    },
+    "player":{
+      "x":10,
+      "y":25
+    },
+    "cores":[
+      { "x":0,"y":0,"type":"small","properties":{
+        "start":{ "angle":270 },  "end":{ "angle":90 } }
+      }
+    ]
+  }
+}

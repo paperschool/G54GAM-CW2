@@ -1,6 +1,8 @@
 class LevelTutorial {
 
-  constructor(world,worldsize,levelsize,player){
+  constructor(world,worldsize,levelsize,properties){
+
+    this.levelname = properties.name;
 
     this.worldreference = world;
 
@@ -19,14 +21,14 @@ class LevelTutorial {
     this.player.setCanMoveLeft(true);
     this.player.setCanMoveRight(false);
 
-    input.setCallBack(InputKeys.SPACE,'tutorial-level-exit',(function(){
-
-      if(this.cores.end.getPlayerCollided() && this.levelState === LevelState.CAN_EXIT){
-        this.levelState = LevelState.EXITED;
-        input.removeCallBack(InputKeys.SPACE,'tutorial-level-exit');
-      }
-
-    }).bind(this));
+    // input.setCallBack(InputKeys.SPACE,'tutorial-level-exit',(function(){
+    //
+    //   if(this.cores.end.getPlayerCollided() && this.levelState === LevelState.CAN_EXIT){
+    //     this.levelState = LevelState.ATTEMPTED_EXITED;
+    //     input.removeCallBack(InputKeys.SPACE,'tutorial-level-exit');
+    //   }
+    //
+    // }).bind(this));
 
     // environmental particle system
     this.snow = new EnvironmentalParticleSystem(this,this.player,new SAT.Vector(0.5,0.1),400,new SAT.Vector(10000,10000));
@@ -43,10 +45,13 @@ class LevelTutorial {
     // level count down timer
     this.timer = new LevelTimer(30000,-1,false,this.levelSize,null);
 
-    // creating new camera objext
-    this.camera = new CameraShudder(0,0,CW,CH,this.worldSize.x,this.worldSize.y);
+    // level finished timeout
+    this.outroTimer = null;
 
-    // this.camera.setFocus(this.player,new SAT.Vector(CW/2,CH/2));
+    // creating new camera objext
+    this.camera = new CameraShudder(CW/2,CH/2,CW,CH,this.worldSize.x,this.worldSize.y);
+
+    this.camera.setFocus(this.player,new SAT.Vector(CW/2,CH/2));
 
     this.colour = new PulseColour(new Colour().random());
     this.colour.setR(0,0);
@@ -64,6 +69,10 @@ class LevelTutorial {
     this.leveltext = new ElectronText(0,0,this.tutorialtext[this.tutorialTextIndex],'futurist',25,'center',40,35,50,50,null)
 
     this.leveltext.printDelay = 20;
+
+  }
+
+  enableControls(){
 
     input.setCallBack(InputKeys.LEFT,'tutorial-level-left',(function(){
 
@@ -95,18 +104,21 @@ class LevelTutorial {
 
     this.setLevelInvert(false);
 
-    input.setCallBack(InputKeys.DOWN,'tutorial-level-core-drop',(function(){
-      this.setLevelInvert(true);
-      this.player.setDive(true);
-    }).bind(this));
+    // input.setCallBack(InputKeys.DOWN,'tutorial-level-core-drop',(function(){
+    //   this.setLevelInvert(true);
+    //   this.player.setDive(true);
+    // }).bind(this));
+    //
+    // input.setCallBack(InputKeys.UP,'tutorial-level-core-rise',(function(){
+    //   this.setLevelInvert(false);
+    //   this.player.setDive(false);
+    // }).bind(this));
 
-    input.setCallBack(InputKeys.UP,'tutorial-level-core-rise',(function(){
-      this.setLevelInvert(false);
-      this.player.setDive(false);
-    }).bind(this));
+  }
 
-
-
+  // this method runs only once per level switch ( does not fire on restart )
+  levelInit(){
+    // this.music.play();
   }
 
   // method to set up initial level settings
@@ -116,16 +128,13 @@ class LevelTutorial {
 
     this.leveltext.getPos().y = -texty;
 
-    this.camera.setFocus(this.player,new SAT.Vector(CW/2,CH/2));
+    this.enableControls();
 
   }
 
-  // this method runs only once per level switch ( does not fire on restart )
-  levelInit(){
-
-    // this.music.play();
-    this.camera.setFocus(this.player,new SAT.Vector(CW/2,CH/2));
-
+  levelEnd(){
+    this.outroTimer = new LevelTimer(2000,-1,false,null,null);
+    this.levelState = LevelState.EXITING;
   }
 
   getLevelInvert(){
@@ -139,10 +148,6 @@ class LevelTutorial {
   update(deltaTime){
 
     this.colour.step();
-
-    // this.camera.resetShake(3);
-
-    this.camera.update(deltaTime);
 
     this.timer.update(deltaTime);
 
@@ -159,15 +164,38 @@ class LevelTutorial {
 
     this.snow.update(deltaTime);
 
-    //
-    if(this.levelState === LevelState.CAN_EXIT){
-      this.player.getPos().set(this.cores.end.getPos());
-      this.player.setVel(new SAT.Vector(0,0));
-    }
-
     this.leveltext.update(deltaTime);
 
+    // updating the outro timer
+    if(this.levelState === LevelState.EXITING){
+      this.outroTimer.update(deltaTime);
+    }
+
     this.updateLevelState();
+
+    this.camera.update(deltaTime);
+
+  }
+
+  updateLevelState(){
+
+    if(this.levelState !== LevelState.EXITING && this.levelState !== LevelState.EXITED) {
+
+      if(!this.player.getAlive()){
+        this.levelState = LevelState.PLAYER_DEAD;
+      }
+
+      if(this.cores.end.getPlayerCollided()){
+        this.player.getPos().set(this.cores.end.getPos());
+        this.player.setVel(new SAT.Vector(0,0));
+        this.levelEnd();
+      }
+
+    } else if(this.levelState === LevelState.EXITING){
+      if(this.outroTimer.isEnded()){
+        this.levelState = LevelState.EXITED;
+      }
+    }
 
   }
 
@@ -203,6 +231,11 @@ class LevelTutorial {
 
     this.leveltext.draw(camera);
 
+    // updating the outro timer
+    if(this.levelState === LevelState.EXITING){
+      Draw.fillCol(new Colour(255,255,255).setA(this.outroTimer.getPercentageComplete()))
+      Draw.rect(0,0,CW,CH);
+    }
 
   }
 
@@ -210,21 +243,7 @@ class LevelTutorial {
     this.pickups.newPickup(x,y,type);
   }
 
-  updateLevelState(){
 
-    if(this.levelState !== LevelState.EXITED) {
-
-      if(!this.player.getAlive()){
-        this.levelState = LevelState.PLAYER_DEAD;
-      }
-
-      if(this.cores.end.getPlayerCollided()){
-        this.levelState = LevelState.CAN_EXIT;
-      }
-
-    }
-
-  }
 
   getLevelState(){
     return this.levelState;

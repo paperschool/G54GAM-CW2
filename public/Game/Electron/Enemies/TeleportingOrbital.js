@@ -86,19 +86,22 @@ class TeleportingOrbital extends Orbital {
 
   draw(camera){
 
-    super.draw(camera);
-
-    Draw.resetStroke();
-
     for(let teleport = 0 ; teleport < this.getTeleportLocations().length ; teleport++){
-      Draw.strokeCol(1,new  Colour(255,255,255));
+      Draw.fill(255,255,255);
       let pos = this.getCore().getOrbitPosition(this,this.getTeleportLocations()[teleport]);
-      Draw.circleOutline(
+      Draw.circle(
         pos.x - camera.x,
         pos.y - camera.y,
-        this.getRadius()
+        5
       )
+      Draw.resetStroke();
     }
+
+    super.draw(camera);
+    Draw.resetStroke();
+    
+    // Draw.strokeCol(1,new  Colour(255,255,255));
+
 
   }
 

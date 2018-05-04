@@ -1,0 +1,31 @@
+{
+  "level":{
+    "properties":{
+      "tutorial": true,
+      "storm":false,
+      "name":"THE SCALE OF THINGS"
+    },
+    "size":{
+      "x":100,
+      "y":50
+    },
+    "player":{
+      "x":10,
+      "y":25
+    },
+    "cores":[
+      { "x":0,"y":0,"type":"small","properties":{
+        "start":{ "angle":270 } }
+      },
+      { "x":0,"y":4,"type":"medium","properties":{},
+        "orbitals":[
+          { "type":"oscillating","angle":330,"goal":210,"speed":0,"direction":-1 },
+          { "type":"oscillating","angle":135,"goal":45,"speed":0,"direction":-1 }
+        ]
+      },
+      { "x":0,"y":10,"type":"large","properties":{
+        "end":{ "angle":90 } }
+      }
+    ]
+  }
+}

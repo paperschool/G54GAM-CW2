@@ -1,7 +1,7 @@
 
 let TunnelType = {
   ENTRANCE:"",
-  EXIT:"PRESS SPACE TO EXIT"
+  EXIT:"NICE ONE"
 }
 
 class Tunnel extends Electron {

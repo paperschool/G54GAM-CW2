@@ -1,0 +1,27 @@
+{
+  "level":{
+    "properties":{
+      "tutorial": true,
+      "storm":false,
+      "name":"ANYONE CAN FALL"
+    },
+    "size":{
+      "x":100,
+      "y":50
+    },
+    "player":{
+      "x":10,
+      "y":25
+    },
+    "cores":[
+      { "x":0,"y":0,"type":"small","properties":{
+        "start":{ "angle":270 } }
+      },
+      { "x":0,"y":3,"type":"small","properties":{ }
+      },
+      { "x":0,"y":6,"type":"small","properties":{
+        "end":{ "angle":90 } }
+      }
+    ]
+  }
+}

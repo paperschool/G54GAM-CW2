@@ -36,10 +36,21 @@ class World {
     // setting up ajax level loader
     this.levelManager = new LevelManager();
 
-    // set of exemplar levels
-    this.levelManager.loadLevel("Game/Assets/Levels/1.json",0,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/2.json",1,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/3.json",2,this.addLevelData.bind(this));
+    // Tutorial Levels
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/1.json",0,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/2.json",1,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/3.json",2,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/4.json",3,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/5.json",4,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/6.json",5,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/7.json",6,this.addLevelData.bind(this));
+
+    //
+    // this.levelManager.loadLevel("Game/Assets/Levels/1.json",0,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/2.json",1,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/3.json",2,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/4.json",3,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/5.json",0,this.addLevelData.bind(this));
 
     this.currentLevel = -1;
 
@@ -92,7 +103,7 @@ class World {
     // building tutorial level
     if(data.level.properties.tutorial){
 
-      newLevel = new LevelTutorial(this,this.size,data.level.size);
+      newLevel = new LevelTutorial(this,this.size,data.level.size,data.level.properties);
 
     } else {
 
@@ -250,7 +261,8 @@ class World {
 
       // setting up next level while count down operates
       this.nextLevel();
-      this.states[this.CURRENT_STATE].setup();
+
+      this.states[this.CURRENT_STATE].setup(this.level.levelname);
 
 
     } else if (state === GameState.PLAY_STATE && this.CURRENT_STATE === GameState.GAMEOVER_STATE) {

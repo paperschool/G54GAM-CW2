@@ -205,10 +205,6 @@ class Core extends Actor {
 
     super.draw(camera);
 
-
-    Draw.resetStroke();
-
-
     if(this.level.getLevelInvert()){
       Draw.fillCol(this.level.colour.getColour().setA(1));
     } else {
@@ -242,10 +238,6 @@ class Core extends Actor {
 
       let colour = new Colour(255,255,255,1);
 
-      // colour.setA(
-      //   Utility.Map(jumpAngleDistance,0,Utility.Radians(this.getJumpAccurracy()),1,0)
-      // );
-
       Draw.stroke(3,colour.getRGBA());
       Draw.circleOutline(
         alternativeOffset.x-camera.x,
@@ -253,49 +245,10 @@ class Core extends Actor {
         Sizes.PLAYER.unit
       );
 
-      // Draw.fillCol(colour);
-      // Draw.circle(
-      //   alternativeOffset.x-camera.x,
-      //   alternativeOffset.y-camera.y,
-      //   Sizes.PLAYER.unit
-      // )
-
     }
 
-
-
-    // let pangle = this.level.player.getDirection();
-    //
-    // Draw.line(
-    //   this.getPos().x-camera.x,this.getPos().y-camera.y,
-    //   Math.cos(Utility.Radians(pangle)) * this.getRadius() + this.getPos().x-camera.x,
-    //   Math.sin(Utility.Radians(pangle)) * this.getRadius() + this.getPos().y-camera.y,
-    //   2, new Colour(51,51,51).getRGBA()
-    // );
-    //
-    // Draw.line(
-    //   this.getPos().x-camera.x,this.getPos().y-camera.y,
-    //   Math.cos(Utility.Radians(pangle+this.jumpAccuracy)) * this.getRadius() + this.getPos().x-camera.x,
-    //   Math.sin(Utility.Radians(pangle+this.jumpAccuracy)) * this.getRadius() + this.getPos().y-camera.y,
-    //   2, new Colour(51,51,51).getRGBA()
-    // );
-    //
-    // Draw.line(
-    //   this.getPos().x-camera.x,this.getPos().y-camera.y,
-    //   Math.cos(Utility.Radians(pangle-this.jumpAccuracy)) * this.getRadius() + this.getPos().x-camera.x,
-    //   Math.sin(Utility.Radians(pangle-this.jumpAccuracy)) * this.getRadius() + this.getPos().y-camera.y,
-    //   2, new Colour(51,51,51).getRGBA()
-    // );
-    //
-    // Draw.fill(51,51,51);
-    // Draw.text(100,'futurista','center',
-    //   new SAT.Vector(
-    //     this.getPos().x-camera.x,
-    //     this.getPos().y-camera.y,
-    //   ),
-    //   this.getPos().x+':'+this.getPos().y
-    // );
-
+    Draw.resetStroke();
+    
   }
 
 

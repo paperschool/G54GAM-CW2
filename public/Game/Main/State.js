@@ -25,7 +25,7 @@ class State {
 
 }
 
-class StartState        extends State {
+class StartState extends State {
 
   constructor(level,changeState){
     super(level,changeState);
@@ -42,17 +42,17 @@ class StartState        extends State {
     this.snow = new EnvironmentalParticleSystem(this,this.center,new SAT.Vector(1,0.5),1000,new SAT.Vector(10000,10000));
 
     // text level
-    this.title = new ElectronText(CW/2,CH/2,'ELECTRON','futurist',230,'center',200,55,50,50,null)
+    this.title = new ElectronText(CW/2,CH/2,'ELECTRON','futurist',100,'center',90,55,50,50,null)
     this.title.useCamera = false;
     this.title.printDelay = 250;
     this.title.setColour(new Colour(255,255,255));
-    this.title.shadowPosition = new SAT.Vector(10,10);
+    this.title.shadowPosition = new SAT.Vector(5,5);
 
-    this.subtitle = new ElectronText(CW/2,CH*2/3,'PRESS SPACE','futurist',90,'center',80,55,50,50,null)
+    this.subtitle = new ElectronText(CW/2,CH*2/3,'PRESS SPACE','futurist',50,'center',40,55,50,50,null)
     this.subtitle.useCamera = false;
     this.subtitle.printDelay = 200;
     this.subtitle.setColour(new Colour(255,255,255));
-    this.subtitle.shadowPosition = new SAT.Vector(5,5);
+    this.subtitle.shadowPosition = new SAT.Vector(2,2);
 
 
   }
@@ -159,13 +159,13 @@ class GameOverState     extends State {
     this.titleOffset = 0;
 
     // text level
-    this.title = new ElectronText(CW/2,CH/2,'PHASED OUT','futurist',180,'center',200,55,50,50,null)
+    this.title = new ElectronText(CW/2,CH/2,'PHASED OUT','futurist',100,'center',90,55,50,50,null)
     this.title.useCamera = false;
     this.title.printDelay = 50;
     this.title.setColour(new Colour(255,100,100));
-    this.title.shadowPosition = new SAT.Vector(10,10);
+    this.title.shadowPosition = new SAT.Vector(5,5);
 
-    this.subtitle = new ElectronText(CW/2,CH*2/3,'PRESS R TO TRY AGAIN','futurist',90,'center',80,55,50,50,null)
+    this.subtitle = new ElectronText(CW/2,CH*2/3,'PRESS R TO TRY AGAIN','futurist',50,'center',40,55,50,50,null)
     this.subtitle.useCamera = false;
     this.subtitle.printDelay = 20;
     this.subtitle.setColour(new Colour(255,255,255));
@@ -217,11 +217,11 @@ class VictoryState      extends State {
     this.snow = new EnvironmentalParticleSystem(this,this.center,new SAT.Vector(1,0.5),1000,new SAT.Vector(10000,10000));
 
     // text level
-    this.title = new ElectronText(CW/2,CH/2,'VICTORY!','futurist',180,'center',160,55,50,50,null)
+    this.title = new ElectronText(CW/2,CH/2,'VICTORY!','futurist',100,'center',90,55,50,50,null)
     this.title.useCamera = false;
     this.title.printDelay = 250;
     this.title.setColour(new Colour(255,255,255));
-    this.title.shadowPosition = new SAT.Vector(10,10);
+    this.title.shadowPosition = new SAT.Vector(5,5);
 
 
 
@@ -296,19 +296,35 @@ class LevelSwitchState  extends State {
 
     super(level,changeState);
 
-    this.setup();
+    this.levelName = "";
+
+    // text level
+    this.title = null;
 
   }
 
-  setup(){
+  setup(name = ""){
 
-    this.timer = new LevelTimer(10,-1,false,new SAT.Vector(100,100));
+    this.timer = new LevelTimer(2000,-1,false,new SAT.Vector(100,100));
 
     this.hud = new HUD(null,this.timer);
+
+    this.levelName = name;
+
+    this.title = new ElectronText(CW/2,CH/2,this.levelName,'futurist',60,'center',50,55,50,50,null)
+    this.title.useCamera = false;
+    this.title.printDelay = 40;
+    this.title.setColour(new Colour(200,200,200));
+    this.title.shadowPosition = new SAT.Vector(3,3);
+
+
+
 
   }
 
   update(deltaTime){
+
+    this.title.update(deltaTime);
 
     this.timer.update(deltaTime);
 
@@ -321,6 +337,8 @@ class LevelSwitchState  extends State {
 
     Draw.fill(255,255,255,0.2*Math.log(1-this.timer.getPercentageComplete())+1);
     Draw.rect(0,0,CW,CH);
+
+    this.title.draw({x:CW/2,y:CH/2});
 
     // this.hud.draw();
 

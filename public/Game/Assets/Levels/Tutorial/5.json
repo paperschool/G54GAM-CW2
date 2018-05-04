@@ -1,0 +1,35 @@
+{
+  "level":{
+    "properties":{
+      "tutorial": true,
+      "storm":false,
+      "name":"QUANTUM TUNNELING 101"
+    },
+    "size":{
+      "x":100,
+      "y":50
+    },
+    "player":{
+      "x":10,
+      "y":25
+    },
+    "cores":[
+      { "x":0,"y":0,"type":"small","properties":{
+        "start":{ "angle":270 } }
+      },
+      { "x":0,"y":3,"type":"small","properties":{},
+        "orbitals":[
+          { "type":"teleporting","angle":0,"timeout":1000,"speed":0,"direction":-1,
+            "teleports": [ 0 , 180 ] },
+          { "type":"teleporting","angle":60,"timeout":1000,"speed":0,"direction":-1,
+            "teleports": [ 60 , 240 ] },
+          { "type":"teleporting","angle":300,"timeout":1000,"speed":0,"direction":-1,
+            "teleports": [ 300 , 130 ] }
+        ]
+      },
+      { "x":0,"y":6,"type":"small","properties":{
+        "end":{ "angle":90 } }
+      }
+    ]
+  }
+}
