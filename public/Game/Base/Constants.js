@@ -58,7 +58,8 @@ var ParticleType = {
   FIREWORK :6,
   GLITTER  :7,
   SNOW     :8,
-  ION      :9
+  ION      :9,
+  IONBURST :10
 }
 
 var AgentType = {

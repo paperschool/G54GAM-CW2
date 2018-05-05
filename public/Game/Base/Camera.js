@@ -97,6 +97,12 @@ class CameraShudder extends Camera {
 
   }
 
+
+
+  setConstantShake(state){
+    this.constantShaking = true;
+  }
+
   update(){
 
     super.update();
@@ -124,7 +130,12 @@ class CameraShudder extends Camera {
   }
 
   cameraShake(shakeValue){
-    this.camera.add(new SAT.Vector(Utility.Random(-this.shakeValue,this.shakeValue),Utility.Random(-this.shakeValue,this.shakeValue)));
+    this.camera.add(
+      new SAT.Vector(
+        Utility.Random(-this.shakeValue,this.shakeValue),
+        Utility.Random(-this.shakeValue,this.shakeValue)
+      )
+    );
   }
 
 }

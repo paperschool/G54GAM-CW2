@@ -37,13 +37,13 @@ class World {
     this.levelManager = new LevelManager();
 
     // Tutorial Levels
-    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/1.json",0,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/2.json",1,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/3.json",2,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/4.json",3,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/5.json",4,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/6.json",5,this.addLevelData.bind(this));
-    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/7.json",6,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/1.json",0,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/2.json",1,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/3.json",2,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/4.json",3,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/5.json",4,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/6.json",5,this.addLevelData.bind(this));
+    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/7.json",6,this.addLevelData.bind(this));
 
     //
     // this.levelManager.loadLevel("Game/Assets/Levels/1.json",0,this.addLevelData.bind(this));
@@ -103,11 +103,11 @@ class World {
     // building tutorial level
     if(data.level.properties.tutorial){
 
-      newLevel = new LevelTutorial(this,this.size,data.level.size,data.level.properties);
+      newLevel = new TutorialElectronLevel(this,this.size,data.level.size,data.level.properties);
 
     } else {
 
-      newLevel = new Level(this,this.size,data.level.size);
+      newLevel = new ElectronLevel(this,this.size,data.level.size);
 
     }
 

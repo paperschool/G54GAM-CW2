@@ -1,4 +1,4 @@
-class LevelTutorial {
+class ElectronLevel {
 
   constructor(world,worldsize,levelsize,properties){
 

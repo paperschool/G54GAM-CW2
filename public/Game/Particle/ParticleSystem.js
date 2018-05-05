@@ -62,7 +62,10 @@ class ParticleSystem {
         this.particles.push(new Particle_Glitter(x,y,d));
         break;
       case ParticleType.ION:
-        this.particles.push(new Particle_Ionisation(x,y,d));
+        this.particles.push(new Particle_Ionisation(x,y,d,50));
+        break;
+      case ParticleType.IONBURST:
+        this.particles.push(new Particle_Ionisation(x,y,d,180));
         break;
     }
 
@@ -341,7 +344,6 @@ class Firework_Spark extends Circle {
 
 }
 
-
 class Particle_Glitter extends Particle {
 
   constructor(x,y,d){
@@ -377,7 +379,6 @@ class Particle_Glitter extends Particle {
 
 }
 
-
 class Glitter extends Circle {
 
   constructor(x,y,s,d){
@@ -412,17 +413,17 @@ class Glitter extends Circle {
 
 class Particle_Ionisation extends Particle {
 
-  constructor(x,y,d){
+  constructor(x,y,d,deviation){
     super(x,y);
 
     // sound.play(SoundLabel.FIREWORK);
 
     this.ions = [];
 
-    let count = Utility.Random(4,2)
+    let count = Utility.Random(5,20)
 
     for(var i = 0 ; i < count ; i++) {
-      this.ions.push(new Particle_Ions(x,y,Utility.Random(5,30),Utility.Random(d-50,d+50)));
+      this.ions.push(new Particle_Ions(x,y,Utility.Random(5,30),Utility.Random(d-deviation,d+deviation)));
     }
 
     this.life = 20;
@@ -446,7 +447,6 @@ class Particle_Ionisation extends Particle {
   }
 
 }
-
 
 class Particle_Ions extends Circle {
 
