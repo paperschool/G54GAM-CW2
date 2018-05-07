@@ -21,41 +21,34 @@ var chart = null;
 
 var sound =  new EngineSounds(pageFilesReady);
 
-$(window).ready(()=>sound.forceReady());
 
+$(window).ready(function(){
 
-// // loading in relevant sound file locations and sound labels into sound engine
-// sound.add(SoundLabel.PISTOL,'Game/Assets/sound/snd9mm.wav',0.1);
-// sound.add(SoundLabel.SHOTGUN,'Game/Assets/sound/sndShotgun.wav',0.05);
-// sound.add(SoundLabel.MACHINEGUN,'Game/Assets/sound/sndM16.wav',0.04);
-// sound.add(SoundLabel.FLAMETHROWER_S,'Game/Assets/sound/sndFlameThrowerStart.wav',0.1);
-// sound.add(SoundLabel.FLAMETHROWER_M,'Game/Assets/sound/sndFlameThrower.wav',0.1,true,false);
-// sound.add(SoundLabel.FLAMETHROWER_E,'Game/Assets/sound/sndFlameThrowerEnd.wav',0.1);
-//
-// sound.add(SoundLabel.PICKUP_GUN,'Game/Assets/sound/sndPickUpWeapon.wav',0.1);
-// sound.add(SoundLabel.PICKUP_SHOTGUN,'Game/Assets/sound/sndInsertShell.wav',0.1);
-// sound.add(SoundLabel.PICKUP_FLAMETHROWER,'Game/Assets/sound/sndLightning1.wav',0.1);
-//
-// sound.add(SoundLabel.FIREWORK,'Game/Assets/sound/sndFirework.wav',0.1);
-//
-// sound.add(SoundLabel.STATE_PAUSED,'Game/Assets/sound/sndPause.wav',0.1);
-// sound.add(SoundLabel.STATE_PLAY,'Game/Assets/sound/sndUnPause.wav',0.1);
-// // sound.add(SoundLabel.STATE_START,'Game/Assets/sound/sndLightning1.wav',0.1);
-// // sound.add(SoundLabel.STATE_VICTORY,'Game/Assets/sound/sndLightning1.wav',0.1);
-//
-// sound.add(SoundLabel.STATE_GAMEOVER_1,'Game/Assets/sound/sndSplashLogo.wav',0.1);
-// sound.add(SoundLabel.STATE_GAMEOVER_2,'Game/Assets/sound/sndStopButton.wav',0.1);
-//
-//
-// // music libraries
-// sound.add(SoundLabel.START_STATE_MUSIC,'Game/Assets/sound/musicStart.mp3',0.2,true,false);
-//
-// sound.add(SoundLabel.PLAY_STATE_MUSIC_1,'Game/Assets/sound/musicPlay1.mp3',0.2,true,false);
-// sound.add(SoundLabel.PLAY_STATE_MUSIC_2,'Game/Assets/sound/musicPlay2.mp3',0.2,true,false);
-// sound.add(SoundLabel.PLAY_STATE_MUSIC_3,'Game/Assets/sound/musicPlay3.mp3',0.2,true,false);
-// sound.add(SoundLabel.PLAY_STATE_MUSIC_4,'Game/Assets/sound/musicPlay4.mp3',0.2,true,false);
-//
-// sound.add(SoundLabel.VICTORY_STATE_MUSIC,'Game/Assets/sound/musicVictory.mp3',0.2,true,false);
+  // forced call back if no sounds are added
+  // sound.forceReady();
+  // $('.sound_gesture_body').remove();
+
+  $('.sound_gesture_button_yes').on('click',(function(){
+    sound.setGesture(true);
+    sound.checkReady();
+    $('.sound_gesture_body').remove();
+  }).bind(this));
+
+  $('.sound_gesture_button_no').on('click',(function(){
+    sound.setGesture(true);
+    sound.mute();
+    sound.forceReady();
+    $('.sound_gesture_body').remove();
+  }).bind(this));
+
+});
+
+// loading in relevant sound file locations and sound labels into sound engine
+sound.add(SoundLabel.CLICK_1,'Game/Assets/Sounds/simpleClick1.wav',0.2,false,false);
+sound.add(SoundLabel.CLICK_4,'Game/Assets/Sounds/simpleClick4.wav',0.1,false,false);
+sound.add(SoundLabel.CLICK_5,'Game/Assets/Sounds/simpleClick5.wav',0.1,false,false);
+sound.add(SoundLabel.WIN_1,'Game/Assets/Sounds/winMusic.wav',0.05,false,false);
+sound.add(SoundLabel.MAIN_AMBIENT_1,'Game/Assets/Sounds/ambientMusic1.wav',0.2,true,false);
 
 function pageFilesReady(){
 

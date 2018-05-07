@@ -1,43 +1,63 @@
 {
   "level":{
     "properties":{
-      "tutorial": true,
-      "storm":false
+      "tutorial": false,
+      "storm":true,
+      "name":"TIMING"
     },
-    "size":{
-      "x":100,
-      "y":50
-    },
-    "player":{
-      "x":10,
-      "y":25
-    },
+    "size":{"x":0,"y":0},
+    "player":{"x":0,"y":0},
     "cores":[
-      { "x":0,"y":0,"type":"small","properties":{ "start":{ "angle":270 } } },
-      { "x":0,"y":4,"type":"medium","properties":{},
-        "orbitals":[
-          { "type":"generic","angle":0,"speed":0,  "direction":1 },
-          { "type":"generic","angle":60,"speed":0, "direction":1 },
-          { "type":"generic","angle":120,"speed":0,"direction":1 },
-          { "type":"generic","angle":180,"speed":0,"direction":1 },
-          { "type":"generic","angle":240,"speed":0,"direction":1 },
-          { "type":"generic","angle":300,"speed":0,"direction":1 }
+      { "x":0,"y":0,"type":"small", "properties":{ "start":{ "angle":270 } },
+        "items":[
+          { "type":"generic","angle":315,"id":1 },
+          { "type":"generic","angle":45,"id":2 }
         ]
       },
-      { "x":5,"y":4,"type":"medium","properties":{},
+      { "x":0,"y":5,"type":"large", "properties":{  },
         "orbitals":[
-          { "type":"generic","angle":0,"speed":0,  "direction":1 },
-          { "type":"generic","angle":60,"speed":0, "direction":1 },
+          { "type":"generic","angle":0,  "speed":0,"direction":1 },
+          { "type":"generic","angle":30,  "speed":0,"direction":1 },
+          { "type":"generic","angle":60, "speed":0,"direction":1 },
+          { "type":"generic","angle":90, "speed":0,"direction":1 },
           { "type":"generic","angle":120,"speed":0,"direction":1 },
+          { "type":"generic","angle":150,"speed":0,"direction":1 },
           { "type":"generic","angle":180,"speed":0,"direction":1 },
+          { "type":"generic","angle":210,"speed":0,"direction":1 },
           { "type":"generic","angle":240,"speed":0,"direction":1 },
+          { "type":"generic","angle":270,"speed":0,"direction":1 },
           { "type":"generic","angle":300,"speed":0,"direction":1 },
-          { "type":"static","angle":300,"speed":0,"direction":1 }
+          { "type":"generic","angle":330,"speed":0,"direction":1 },
+          { "type":"oscillating","angle":260,"goal":350,"speed":0,"direction":1 },
+          { "type":"oscillating","angle":100,"goal":10,"speed":0,"direction":-1 },
+          { "type":"oscillating","angle":260,"goal":160,"speed":0,"direction":-1 }
+
         ]
       },
-      { "x":5,"y":0,"type":"small", "properties":{} },
-      { "x":9,"y":0,"type":"medium", "properties":{} },
-      { "x":9,"y":4,"type":"small", "properties":{ "end":{ "angle":90 } } }
+      { "x":5,"y":5,"type":"small", "properties":{  },
+        "items":[
+          { "type":"generic","angle":350,"id":1 },
+          { "type":"generic","angle":0,"id":1 },
+          { "type":"generic","angle":10,"id":1 }
+        ]
+      },
+      { "x":-5,"y":5,"type":"small", "properties":{  },
+        "items":[
+          { "type":"generic","angle":170,"id":1 },
+          { "type":"generic","angle":180,"id":1 },
+          { "type":"generic","angle":190,"id":1 }
+        ]
+      },
+      { "x":0,"y":10,"type":"small", "properties":{ "end":{ "angle":90 } },
+        "items":[
+          { "type":"generic","angle":170,"id":1 },
+          { "type":"generic","angle":180,"id":1 },
+          { "type":"generic","angle":190,"id":1 },
+          { "type":"generic","angle":350,"id":1 },
+          { "type":"generic","angle":0,"id":1 },
+          { "type":"generic","angle":10,"id":1 }
+        ]
+      }
     ]
   }
 }

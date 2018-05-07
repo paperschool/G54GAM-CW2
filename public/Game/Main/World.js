@@ -37,20 +37,22 @@ class World {
     this.levelManager = new LevelManager();
 
     // Tutorial Levels
-    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/1.json",0,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/2.json",1,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/3.json",2,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/4.json",3,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/5.json",4,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/6.json",5,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/7.json",6,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/1.json",0,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/2.json",1,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/3.json",2,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/4.json",3,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/5.json",4,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/6.json",5,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/7.json",6,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/8.json",7,this.addLevelData.bind(this));
 
-    //
-    // this.levelManager.loadLevel("Game/Assets/Levels/1.json",0,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/2.json",1,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/3.json",2,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/4.json",3,this.addLevelData.bind(this));
-    // this.levelManager.loadLevel("Game/Assets/Levels/5.json",0,this.addLevelData.bind(this));
+
+    this.levelManager.loadLevel("Game/Assets/Levels/1.json",8,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/2.json",9,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/3.json",10,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/4.json",11,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/5.json",12,this.addLevelData.bind(this));
+    this.levelManager.loadLevel("Game/Assets/Levels/6.json",13,this.addLevelData.bind(this));
 
     this.currentLevel = -1;
 
@@ -107,17 +109,19 @@ class World {
 
     } else {
 
-      newLevel = new ElectronLevel(this,this.size,data.level.size);
+      newLevel = new ElectronLevel(this,this.size,data.level.size,data.level.properties);
 
     }
 
-    // create all walls within level
+    // setting up level cores
     for(var core of data.level.cores){
 
+      //
       let r = 0;
       let x = r * core.x;
       let y = r * core.y;
 
+      // setting up sizes and positions based off of type properties
       switch(core.type){
         case Sizes.CORE_SMALL.id :
           r = Sizes.CORE_SMALL.unit*Sizes.CORE_SMALL.scalar;
@@ -137,33 +141,28 @@ class World {
         default: break;
       }
 
+      // adding core to the level
       let nCore = newLevel.cores.addCore(
         x,y,r,core.properties
       )
 
       // performing orbital addition
       if(core.orbitals){
-
+        // for each orbital spawn new orbital
         for(let orbital of core.orbitals){
           newLevel.orbitals.addOrbital(nCore,orbital)
         }
+      }
 
+      // performing orbital addition
+      if(core.items){
+        // for each orbital spawn new orbital
+        for(let item of core.items){
+          newLevel.items.addItem(nCore,item)
+        }
       }
 
     }
-
-    // do a final build of the graph object ready for astar searching
-    // newLevel.agents.grid.rebuildMesh();
-
-
-    // // add world pickups
-    // for(var pickup = 0 ; pickup < data.level.pickups.length ; pickup++){
-    //   newLevel.addPickup(
-    //     data.level.pickups[pickup].x*this.gridSize,
-    //     data.level.pickups[pickup].y*this.gridSize,
-    //     data.level.pickups[pickup].type
-    //   )
-    // }
 
     return newLevel;
 

@@ -1,13 +1,14 @@
 
 var Sizes = {
-  MARGIN     : { id:"margin", unit:50,  scalar:1 },
-  PLAYER     : { id:"player", unit:50,  scalar:1 },
-  ENEMY      : { id:"enemy",  unit:30,  scalar:1 },
-  TUNNEL     : { id:"tunnel", unit:70,  scalar:1 },
-  UNIT       : { id:"unit",   unit:400, scalar:1 },
-  CORE_SMALL : { id:"small",  unit:400, scalar:1 },
-  CORE_MEDIUM: { id:"medium", unit:400, scalar:2 },
-  CORE_LARGE : { id:"large",  unit:400, scalar:3 }
+  MARGIN     : { id:"margin",    unit:50,  scalar:1 },
+  PLAYER     : { id:"player",    unit:50,  scalar:1 },
+  ENEMY      : { id:"enemy",     unit:30,  scalar:1 },
+  ITEM       : { id:"item",      unit:30,  scalar:1 },
+  TUNNEL     : { id:"tunnel",    unit:70,  scalar:1 },
+  UNIT       : { id:"unit",      unit:400, scalar:1 },
+  CORE_SMALL : { id:"small",     unit:400, scalar:1 },
+  CORE_MEDIUM: { id:"medium",    unit:400, scalar:2 },
+  CORE_LARGE : { id:"large",     unit:400, scalar:3 }
 }
 
 ///////////////////////////////
@@ -30,6 +31,7 @@ var LevelState = {
 }
 
 var InputKeys = {
+
   UP:'UP',
   DOWN:'DOWN',
   LEFT:'LEFT',
@@ -109,35 +111,17 @@ var PickupType = {
 
 var SoundLabel = {
 
-  GUN:"gun",
-  PISTOL:"pistol",
-  SHOTGUN:"shotgun",
-  SHOTGUN_L:"shotgunLoad",
-  MACHINEGUN:"machinegun",
-  FLAMETHROWER_S:"flamethrowerStart",
-  FLAMETHROWER_M:"flamethrowerMiddle",
-  FLAMETHROWER_E:"flamethrowerEnd",
+  CLICK_1:"simpleClick1",
+  CLICK_2:"simpleClick2",
+  CLICK_3:"simpleClick3",
+  CLICK_4:"simpleClick4",
+  CLICK_5:"simpleClick5",
 
-  PICKUP_GUN:"pickupGun",
-  PICKUP_SHOTGUN:"pickupGunShotgun",
-  PICKUP_FLAMETHROWER:"pickupGunFlamethrower",
+  WIN_1:"winSound",
 
-  FIREWORK:"firework",
-
-  STATE_PAUSED:"statePaused",
-  STATE_PLAY:"statePlay",
-  STATE_START:"stateStart",
-  STATE_VICTORY:"stateVictory",
-  STATE_GAMEOVER_1:"stateGameover1",
-  STATE_GAMEOVER_2:"stateGameover2",
-
-  START_STATE_MUSIC:"startStartMusic",
-  PLAY_STATE_MUSIC_1:"playStartMusic1",
-  PLAY_STATE_MUSIC_2:"playStartMusic2",
-  PLAY_STATE_MUSIC_3:"playStartMusic3",
-  PLAY_STATE_MUSIC_4:"playStartMusic4",
-
-  VICTORY_STATE_MUSIC:"victoryStateMusic"
+  MAIN_AMBIENT_1:"mainAmbient1",
+  MAIN_AMBIENT_2:"mainAmbient2",
+  MAIN_AMBIENT_3:"mainAmbient3"
 
 }
 

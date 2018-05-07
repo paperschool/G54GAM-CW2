@@ -3,6 +3,8 @@
 <head>
 	<title>Electron</title>
 
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+
 	<link rel="stylesheet" href="loader.css">
 	<link rel="stylesheet" href="stylesheet.css">
 
@@ -56,6 +58,10 @@
 
 	<script src="Game/Electron/Enemies/Orbital.js" type="text/javascript"></script>
 
+	<script src="Game/Electron/Item/ItemManager.js" type="text/javascript"></script>
+
+	<script src="Game/Electron/Item/item.js" type="text/javascript"></script>
+
 	<script src="Game/Electron/Enemies/StaticOrbital.js" type="text/javascript"></script>
 
 	<script src="Game/Electron/Enemies/TeleportingOrbital.js" type="text/javascript"></script>
@@ -64,9 +70,10 @@
 
 	<script src="Game/Electron/Storm.js" type="text/javascript"></script>
 
+	<script src="Game/Level/ElectronLevel.js" type="text/javascript"></script>
+
 	<script src="Game/Level/TutorialElectronLevel.js" type="text/javascript"></script>
 
-	<script src="Game/Level/ElectronLevel.js" type="text/javascript"></script>
 
 
 	<!-- GUI Classes -->
@@ -173,6 +180,14 @@
 			<div class="loader-container">
 				<div class="outerCircle"></div>
 				<div class="innerCircle"></div>
+			</div>
+		</div>
+
+		<div class="sound_gesture_body">
+			<div class="sound_gesture_title">Allow Sound? (Chrome Security Update)</div>
+			<div class="sound_gesture_button_container">
+				<div class="sound_gesture_button sound_gesture_button_yes">YES</div>
+				<div class="sound_gesture_button sound_gesture_button_no">NO</div>
 			</div>
 		</div>
 

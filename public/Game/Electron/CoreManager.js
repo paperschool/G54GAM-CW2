@@ -13,7 +13,7 @@ class CoreManager {
 
     this.end = null;
 
-    this.highlightExit = false;
+    this.highlightExit = true;
 
     input.setCallBack(InputKeys.SPACE,'core-manager-jump-attempt',(function(){
 
@@ -21,6 +21,7 @@ class CoreManager {
 
       if(currentCore.getCanJump() && !this.player.getDive()){
         currentCore.jump(this.player,this.player.getDirection()+180);
+        sound.play(SoundLabel.CLICK_5);
       }
 
     }).bind(this));
@@ -71,6 +72,8 @@ class CoreManager {
     this.end.update(deltaTime);
 
     this.canJump();
+
+    this.setHighlightExit(this.level.items.getCollected());
 
   }
 

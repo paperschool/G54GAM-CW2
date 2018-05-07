@@ -1,5 +1,5 @@
 /*!
- *  howler.js v2.0.9
+ *  howler.js v2.0.10
  *  howlerjs.com
  *
  *  (c) 2013-2018, James Simpson of GoldFire Studios
@@ -786,6 +786,9 @@
               self._emit('play', sound._id);
             }
 
+            // Setting rate before playing won't work in IE, so we set it again here.
+            node.playbackRate = sound._rate;
+
             // If the node is still paused, then we can assume there was a playback issue.
             if (node.paused) {
               self._emit('playerror', sound._id, 'Playback was unable to start. This is most commonly an issue ' +
@@ -794,7 +797,7 @@
             }
 
             // Setup the end timer on sprites or listen for the ended event.
-            if (sprite !== '__default') {
+            if (sprite !== '__default' || sound._loop) {
               self._endTimers[sound._id] = setTimeout(self._ended.bind(self, sound), timeout);
             } else {
               self._endTimers[sound._id] = function() {

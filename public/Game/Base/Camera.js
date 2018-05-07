@@ -71,6 +71,10 @@ class Camera {
 
   }
 
+  setCameraSize(size){
+    this.camera.set(size);
+  }
+
   setFocus(focus,focusOffset){
 
     this.focus = focus
@@ -100,7 +104,7 @@ class CameraShudder extends Camera {
 
 
   setConstantShake(state){
-    this.constantShaking = true;
+    this.constantShaking = state;
   }
 
   update(){

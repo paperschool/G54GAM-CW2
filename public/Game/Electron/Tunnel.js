@@ -68,7 +68,7 @@ class Tunnel extends Electron {
 
     if(r){
 
-      if(r.aInB || r.bInA){
+      if((r.aInB || r.bInA) && this.level.items.getCollected()){
 
         // simple implementation of single fire trap
         if(!this.getPlayerColliding() && !this.getPlayerCollided()){
@@ -83,11 +83,10 @@ class Tunnel extends Electron {
           this.getColour().setRGBA(255,100,100,1);
         }
 
-
+      } else if(!this.level.items.getCollected()) {
+        this.getColour().setRGBA(255,100,100,1);
       } else {
-
         this.getColour().setRGBA(255,200,100,1);
-
       }
 
       return true;
@@ -116,6 +115,7 @@ class Tunnel extends Electron {
       this.tunnelText.getPos().y = this.getPos().y + this.getRadius() + this.getMargin()*3;
       this.tunnelText.update(deltaTime);
       this.level.player.setDirection(this.getDirection());
+      this.level.player.setInvincibility(true);
       this.level.player.setCanMoveLeft(false);
       this.level.player.setCanMoveRight(false);
     } else {
@@ -142,6 +142,8 @@ class Tunnel extends Electron {
           255,
           Utility.Map(i,0,10,0,255)
         ));
+
+        Draw.strokeCol(i/2,this.getColour());
 
         Draw.circleOutline(
           this.getPos().x - camera.x+Utility.Random(-(10-i),(10-i)),

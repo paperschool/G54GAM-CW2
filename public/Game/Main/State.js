@@ -58,9 +58,10 @@ class StartState extends State {
   }
 
   setup(){
-    sound.play(SoundLabel.START_STATE_MUSIC);
     this.title.reset();
     this.subtitle.reset();
+    sound.play(SoundLabel.MAIN_AMBIENT_1);
+
   }
 
   setReady(){
@@ -262,11 +263,11 @@ class PauseState        extends State {
     super(level,changeState);
 
     // text level
-    this.title = new ElectronText(CW/2,CH/2,'FROZEN!','futurist',180,'center',200,55,50,50,null)
+    this.title = new ElectronText(CW/2,CH/2,'FROZEN!','futurist',100,'center',90,55,50,50,null)
     this.title.useCamera = false;
     this.title.printDelay = 10;
     this.title.setColour(new Colour(255,100,100));
-    this.title.shadowPosition = new SAT.Vector(10,10);
+    this.title.shadowPosition = new SAT.Vector(5,5);
 
   }
 

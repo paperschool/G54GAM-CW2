@@ -150,60 +150,60 @@ class Player extends Electron {
 
   draw(camera){
 
-    if(this.canExit){
+    Draw.strokeCol(4,new Colour(255,255,255));
 
-      Draw.strokeCol(4,new Colour(255,255,255));
+    for(let life = this.getLife() ; life >= 0 ; life--){
 
-      for(let life = this.getLife() ; life >= 0 ; life--){
+      let radius = this.getRadius()*Utility.Map(life,0,this.getLifespan(),1,0);
 
-        let radius = this.getRadius()*Utility.Map(life,0,this.getLifespan(),1,0);
+      let pos = this.getCore().getOrbitPosition(
+        this,
+        this.getDirection() + this.getVel().x*Utility.Map(life,0,this.getLifespan(),3,0)
+      );
 
-        let pos = this.getCore().getOrbitPosition(
-          this,
-          this.getDirection() + this.getVel().x*Utility.Map(life,0,this.getLifespan(),3,0)
-        );
+      Draw.circleOutline(
+        pos.x - camera.x,
+        pos.y - camera.y,
+        radius
+      );
 
-        Draw.circleOutline(
-          pos.x - camera.x,
-          pos.y - camera.y,
-          radius
-        );
-
-      }
-
-      Draw.resetStroke();
-
-      // Draw.fill(100,255,100);
-      // Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
-
-    } else {
-
-      let split = this.canExit ? 0 : -this.vel.x;
-
-      let offsetPos = null;
-
-      offsetPos = this.getPolarVector(
-        this.getCore().getPos(),
-        this.getDirection()+split*1.5,
-        this.getCore().getRadius() + this.getRadius() + this.getMargin()+Utility.Random(-5,5)
-      )
-
-      Draw.fillCol(new Colour(255,0,0,0.5));
-      Draw.circle(offsetPos.x-camera.x,offsetPos.y-camera.y,this.getRadius()*0.8);
-
-
-      offsetPos = this.getPolarVector(
-        this.getCore().getPos(),
-        this.getDirection()+split,
-        this.getCore().getRadius() + this.getRadius() + this.getMargin()+Utility.Random(-5,5)
-      )
-
-      Draw.fillCol(new Colour(0,0,255,0.5));
-      Draw.circle(offsetPos.x-camera.x,offsetPos.y-camera.y,this.getRadius()*0.9);
-
-      Draw.fillHex(gameTheme['PLAYER'])
-      Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
     }
+
+    Draw.resetStroke();
+
+    // if(this.canExit){
+    //
+    //   // Draw.fill(100,255,100);
+    //   // Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
+    //
+    // } else {
+    //
+    //   let split = this.canExit ? 0 : -this.vel.x;
+    //
+    //   let offsetPos = null;
+    //
+    //   offsetPos = this.getPolarVector(
+    //     this.getCore().getPos(),
+    //     this.getDirection()+split*1.5,
+    //     this.getCore().getRadius() + this.getRadius() + this.getMargin()+Utility.Random(-5,5)
+    //   )
+    //
+    //   Draw.fillCol(new Colour(255,0,0,0.5));
+    //   Draw.circle(offsetPos.x-camera.x,offsetPos.y-camera.y,this.getRadius()*0.8);
+    //
+    //
+    //   offsetPos = this.getPolarVector(
+    //     this.getCore().getPos(),
+    //     this.getDirection()+split,
+    //     this.getCore().getRadius() + this.getRadius() + this.getMargin()+Utility.Random(-5,5)
+    //   )
+    //
+    //   Draw.fillCol(new Colour(0,0,255,0.5));
+    //   Draw.circle(offsetPos.x-camera.x,offsetPos.y-camera.y,this.getRadius()*0.9);
+    //
+    //   Draw.fillHex(gameTheme['PLAYER'])
+    //   Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
+    // }
 
   }
 

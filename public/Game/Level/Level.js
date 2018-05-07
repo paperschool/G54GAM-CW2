@@ -99,7 +99,7 @@ class Level {
     // this.pickups.setLevelReady(true);
 
     this.camera.setFocus(this.player,new SAT.Vector(CW/2,CH/2));
-    
+
   }
 
   // this method runs only once per level switch ( does not fire on restart )
@@ -111,9 +111,10 @@ class Level {
 
   update(deltaTime){
 
-    this.colour.step();
 
     this.camera.update(deltaTime);
+
+    this.colour.step();
 
     // this.background.update(deltaTime);
 

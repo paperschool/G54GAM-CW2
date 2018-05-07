@@ -21,6 +21,7 @@ class ElectronText extends Entity {
     this.marginy = marginy || 20;
 
     this.setColour(colour || new Colour(51,51,51));
+    this.setSecondaryColour(this.getColour());
 
     this.center = new SAT.Vector(0,0);
 
@@ -34,6 +35,14 @@ class ElectronText extends Entity {
     this.printDelay = 100;
     this.printLastTime = Date.now();
 
+  }
+
+  getSecondaryColour(){
+    return this.secondaryColour ;
+  }
+
+  setSecondaryColour(colour){
+    this.secondaryColour = colour;
   }
 
   reset(){
@@ -65,20 +74,9 @@ class ElectronText extends Entity {
 
   draw(camera){
 
-    Draw.fillCol(this.getColour());
     for(let c = 0 ; c < this.printIndex ; c++){
 
-      Draw.text(
-        this.fontsize,
-        this.font,
-        this.alignment,
-        new SAT.Vector(
-          this.getPos().x-this.centerOffset.x+(c*this.spacing) - ( this.useCamera ? camera.x : 0 ),
-          this.getPos().y-this.centerOffset.y                  - ( this.useCamera ? camera.y : 0 )
-        ),
-        this.text.charAt(c)
-        );
-
+      Draw.fillCol(this.getSecondaryColour());
       Draw.text(
         this.fontsize,
         this.font,
@@ -86,6 +84,18 @@ class ElectronText extends Entity {
         new SAT.Vector(
           this.shadowPosition.x+this.getPos().x-this.centerOffset.x+(c*this.spacing) - ( this.useCamera ? camera.x : 0 ),
           this.shadowPosition.y+this.getPos().y-this.centerOffset.y                  - ( this.useCamera ? camera.y : 0 )
+        ),
+        this.text.charAt(c)
+        );
+
+      Draw.fillCol(this.getColour());
+      Draw.text(
+        this.fontsize,
+        this.font,
+        this.alignment,
+        new SAT.Vector(
+          this.getPos().x-this.centerOffset.x+(c*this.spacing) - ( this.useCamera ? camera.x : 0 ),
+          this.getPos().y-this.centerOffset.y                  - ( this.useCamera ? camera.y : 0 )
         ),
         this.text.charAt(c)
         );
