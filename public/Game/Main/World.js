@@ -55,7 +55,7 @@ class World {
     this.levelManager.loadLevel("Game/Assets/Levels/6.json",13,this.addLevelData.bind(this));
 
     // index of current level
-    this.currentLevel = -1;
+    this.currentLevel = 13;
 
     // registering input call backs for state switching purposes (pause -> play or play -> pause)
     input.setCallBack(InputKeys.PAUSE,'worldpause',(function(){
