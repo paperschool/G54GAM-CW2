@@ -35,14 +35,11 @@ class TutorialElectronLevel extends ElectronLevel {
     // invoking super control enable
     super.enableControls();
 
-    // enabling left control
-    this.player.setCanMoveLeft(true);
-
-    // enabling right control
-    this.player.setCanMoveRight(false);
-
     // setting input callback for when left is pressed
     input.setCallBack(InputKeys.LEFT,'tutorial-level-left',(function(){
+
+      // enable left movement
+      this.player.setCanMoveLeft(true);
 
       // incrementing tutorial text when successfully pressed
       this.tutorialTextIndex = 1;
@@ -79,6 +76,12 @@ class TutorialElectronLevel extends ElectronLevel {
       }
 
     }).bind(this));
+
+    // enabling left control
+    this.player.setCanMoveLeft(false);
+
+    // enabling right control
+    this.player.setCanMoveRight(false);
 
   }
 

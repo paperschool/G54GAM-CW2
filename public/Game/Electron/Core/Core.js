@@ -220,8 +220,10 @@ class Core extends Actor {
       Draw.fill(255,255,255,0.5);
     }
 
+    // drawing core space
     Draw.circle(this.getPos().x-camera.x,this.getPos().y-camera.y,this.getRadius());
 
+    // drawing core outline
     Draw.stroke(3,new Colour(255,255,255).getRGBA());
     Draw.circleOutline(
       this.getPos().x-camera.x,
@@ -229,15 +231,17 @@ class Core extends Actor {
       this.getRadius()
     )
 
-
-    // render hinting for the adjacent jump angle
+    // player occupied core
     let pCore = this.level.player.getCore();
+
+    // candidate jump core
     let cCore = pCore.getJumpCore();
-    let player = this.level.player;
+
     if(cCore && pCore.getCanJump()){
+
+      // angle on adjacent core for visual feedback purposes
       let alternativeOffset = cCore.getOrbitPosition(this.level.player,this.level.player.getDirection()+180);
-      let jumpAngle = Utility.angle(this.getPos(),pCore.getPos());
-      let jumpAngleDistance = Math.abs(jumpAngle-Utility.Radians(this.level.player.getDirection()))
+
       let colour = new Colour(255,255,255,1);
       Draw.stroke(3,colour.getRGBA());
       Draw.circleOutline(
@@ -245,6 +249,33 @@ class Core extends Actor {
         alternativeOffset.y-camera.y,
         Sizes.PLAYER.unit
       );
+
+      // alternativeOffset = cCore.getPolarVector(
+      //   cCore.getPos(),
+      //   this.level.player.getDirection()+180,
+      //   cCore.getRadius()+this.level.player.getRadius()+this.level.player.getMargin()+Utility.Random(0,20)
+      // );
+      //
+      // Draw.stroke(3,colour.getRGBA());
+      // Draw.circleOutline(
+      //   alternativeOffset.x-camera.x,
+      //   alternativeOffset.y-camera.y,
+      //   Sizes.PLAYER.unit*0.8
+      // );
+      //
+      // alternativeOffset = cCore.getPolarVector(
+      //   cCore.getPos(),
+      //   this.level.player.getDirection()+180,
+      //   cCore.getRadius()+this.level.player.getRadius()+this.level.player.getMargin()+Utility.Random(10,30)
+      // );
+      //
+      // Draw.stroke(3,colour.getRGBA());
+      // Draw.circleOutline(
+      //   alternativeOffset.x-camera.x,
+      //   alternativeOffset.y-camera.y,
+      //   Sizes.PLAYER.unit*0.4
+      // );
+
     }
     Draw.resetStroke();
 

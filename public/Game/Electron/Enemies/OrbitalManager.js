@@ -66,7 +66,7 @@ class OrbitalManager {
       if(r){
         // kill player and shake camera
         this.level.player.setAlive(false);
-        this.level.camera.resetShake(10);
+        this.level.camera.resetShake(7);
       }
     }
 
