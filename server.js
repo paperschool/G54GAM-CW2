@@ -33,12 +33,6 @@ var game = null;
 // constants for path finding
 var ROOT_DIRECTORY = process.cwd();
 var PUBLIC_DIRECTORY = process.cwd() + '/public';
-var TESTBED_DIRECTORY = process.cwd() + '/testbed';
-var SERVER_DIRECTORY = process.cwd() + "/server";
-var CLIENT_DIRECTORY = process.cwd() + "/client";
-var UTILITY_DIRECTORY = process.cwd() + "/utility";
-var EDITOR_DIRECTORY = process.cwd() + "/level-editor";
-var GAME_DIRECTORY = SERVER_DIRECTORY + "/game";
 
 // server listening on port 3000
 server.listen(process.env.PORT || 3000);
@@ -47,39 +41,6 @@ server.listen(process.env.PORT || 3000);
 
 // appending logger library to express app
 app.use(logger('tiny'));
-
-// app.use(express.static('.'));
-
-app.get('/editor',function(req,res){
-
-
-  console.log("USER : Local User Accessed Level Editor: " + req.connection.remoteAddress);
-
-  app.use(express.static(EDITOR_DIRECTORY));
-
-  res.sendFile(EDITOR_DIRECTORY + '/editor.html');
-
-});
-
-// app.get('/testbed',function(req,res){
-//
-//   console.log("USER : Local User Accessed Level Editor: " + req.connection.remoteAddress);
-//   app.use(express.static(TESTBED_DIRECTORY));
-//   res.sendFile(TESTBED_DIRECTORY + '/index.html');
-//
-// });
-
-app.get('/testbed/behaviour',function(req,res){
-  var DIRECTORY = TESTBED_DIRECTORY + '/behaviour';
-  app.use(express.static(DIRECTORY));
-  res.sendFile(DIRECTORY+'/index.html');
-});
-
-app.get('/testbed/supercover',function(req,res){
-  var DIRECTORY = TESTBED_DIRECTORY + '/supercover';
-  app.use(express.static(DIRECTORY));
-  res.sendFile(DIRECTORY+'/index.html');
-});
 
 app.get('/',function(req,res){
 

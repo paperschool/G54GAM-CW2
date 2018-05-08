@@ -1,3 +1,5 @@
+
+// psuedo enum type for orbital class
 var OrbitalType = {
   GENERIC:"generic",
   TELEPORTING:"teleporting",
@@ -9,16 +11,20 @@ class OrbitalManager {
 
   constructor(level){
 
+    // setting level reference
     this.level = level;
 
+    // collection of all orbitals within the game
     this.orbitals = [];
 
   }
 
   addOrbital(core,orbitalProperties){
 
+    // reference to new orbital
     let newOrbital = null;
 
+    // switching through various orbital types
     switch(orbitalProperties.type){
       case OrbitalType.GENERIC     :
         newOrbital = new Orbital(this.level,0,0,orbitalProperties);
@@ -37,30 +43,31 @@ class OrbitalManager {
         break;
     }
 
+    // adding newly constructed orbital object to given core
     core.addChild(newOrbital,orbitalProperties.angle);
 
+    // pushing orbital to manager
     this.orbitals.push(newOrbital);
 
   }
 
   update(deltaTime){
 
+    // iterating over orbital collection type
     for(let orbital of this.orbitals){
 
+      // updating orbital
       orbital.update(deltaTime);
 
       /// Checking Collisions with playerSeedn
-
       let r = orbital.getCollider().test(this.level.player.getCollider());
 
+      // if response from collision exists (collision has occured)
       if(r){
-        // this.level.player.setAlive(false);
-        this.level.player.applyDamage(1);
-
+        // kill player and shake camera
+        this.level.player.setAlive(false);
         this.level.camera.resetShake(10);
-        // this.level.player.beingDamaged = true;
       }
-
     }
 
 }
@@ -69,7 +76,9 @@ class OrbitalManager {
 
     Draw.resetStroke();
 
+    // iterating over orbiatal collection
     for(let orbital of this.orbitals){
+      // performing draw method of orbital object
       orbital.draw(camera);
     }
   }

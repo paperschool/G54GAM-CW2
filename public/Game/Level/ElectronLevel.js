@@ -2,10 +2,13 @@ class ElectronLevel {
 
   constructor(world,worldsize,levelsize,properties){
 
+    // storing reference to level properties
     this.levelProperties = properties;
 
+    // storing level name from properties
     this.levelname = this.levelProperties.name;
 
+    // reference to parent object
     this.worldreference = world;
 
     // size of world in virtual pixels (offscreen and onscreen)
@@ -100,9 +103,12 @@ class ElectronLevel {
   }
 
   levelEnd(){
+    // if level end state has been triggered reset the outro timer
     this.outroTimer = new LevelTimer(2000,-1,false,null,null);
+    // set the level state to exiting
     this.levelState = LevelState.EXITING;
-    sound.play(SoundLabel.WIN_1);
+    // play outro sound
+    sound.play(SoundLabel.WIN_2);
   }
 
   getLevelInvert(){
@@ -115,58 +121,77 @@ class ElectronLevel {
 
   update(deltaTime){
 
+    // steping level colour background
     this.colour.step();
 
+    // updating level timer (not used though)
     this.timer.update(deltaTime);
 
+    // updating level particle system
     this.particleSystem.update(deltaTime);
 
+    // updating the core manager
     this.cores.update(deltaTime);
 
+    // updating the orbital manager
     this.orbitals.update(deltaTime);
 
+    // updating the item manager
     this.items.update(deltaTime);
 
     // update player
     this.player.update(deltaTime);
 
+    // upating the environmental particle system
     this.snow.update(deltaTime);
 
+    // if the level includes a storm object update it too
     if(this.levelProperties.storm)
       this.storm.update(deltaTime);
 
-    // updating the outro timer
+    // updating the outro timer if level is in exit state
     if(this.levelState === LevelState.EXITING){
       this.outroTimer.update(deltaTime);
     }
 
+    // updating level state
     this.updateLevelState();
 
+    // updating camera offset and focus position (incase of screen resize)
     this.camera.setCameraSize(new SAT.Vector(CW/2,CH/2))
     this.camera.setFocus(this.player,new SAT.Vector(CW/2,CH/2));
 
+    // updating camera object
     this.camera.update(deltaTime);
 
   }
 
   updateLevelState(){
 
+    // if level is not either exiting or exited
     if(this.levelState !== LevelState.EXITING && this.levelState !== LevelState.EXITED) {
 
+      // check player live state
       if(!this.player.getAlive()){
+        // if dead set level state to player dead
         this.levelState = LevelState.PLAYER_DEAD;
       }
 
+      // if exit tunnel has allowed player exit
       if(this.cores.end.getPlayerCollided()){
+        // spwan ion burt particle to system
         this.particleSystem.addParticle(this.player.getPos().x,this.player.getPos().y,0,ParticleType.IONBURST)
-        this.player.getPos().set(this.cores.end.getPos());
-        this.player.setVel(new SAT.Vector(0,0));
+        // start level end
         this.levelEnd();
       }
 
+    // if level is in exiting state
     } else if(this.levelState === LevelState.EXITING){
+      // spawn particle system at player position
       this.particleSystem.addParticle(this.player.getPos().x,this.player.getPos().y,0,ParticleType.IONBURST)
+      // if timer has ended
       if(this.outroTimer.isEnded()){
+        // set level state to exited
         this.levelState = LevelState.EXITED;
       }
     }
@@ -175,8 +200,11 @@ class ElectronLevel {
 
   renderHintText(){
 
+    // if the player is in at adjacency angle between two cores
     if(this.player.getCore().getCanJump()){
+      // if the hint text has not been rendered
       if(!this.hintText){
+        // set up hint text, camera trcking, print speed, colour, secondary colour and shadow offset
         this.hintText = new ElectronText(CW/2,100,"PRESS SPACE TO JUMP",'futurist',40,'center',35,35,50,50,null);
         this.hintText.useCamera = false;
         this.hintText.printDelay = 10;
@@ -184,9 +212,12 @@ class ElectronLevel {
         this.hintText.setSecondaryColour(new Colour(100,100,100));
         this.hintText.shadowPosition = new SAT.Vector(2,2);
       }
+      // update and draw hint text if already exiting
       this.hintText.update(1);
       this.hintText.draw();
     } else {
+
+      // reset hint text for next jump situation
       this.hintText = null;
     }
 
@@ -194,40 +225,59 @@ class ElectronLevel {
 
   draw(){
 
+    // get camera offset
     let camera = this.camera.getOffset();
 
+    // set background colour to 40% opacity
     this.colour.getColour().a = 0.4
 
+    // set fill to background colour
     Draw.fillCol(this.colour.getColour())
 
+    // draw screensized rectangle
     Draw.rect(0,0,CW,CH);
 
+    // if level inverison state is true (unsed feature)
     if(this.levelInvert){
+      // set fill of overlay background to 50% opcacity white
       Draw.fillCol(new Colour(255,255,255,0.5));
+      // draw screensized overlay
       Draw.rect(0,0,CW,CH);
+      // draw obritals
       this.orbitals.draw(camera);
+      // draw cores
       this.cores.draw(camera);
+      // render environmental partcles
       this.snow.draw(camera);
+
+    // if not inverted
     } else {
-
+      // render environmental partcles
       this.snow.draw(camera);
+      // draw cores
       this.cores.draw(camera);
+      // draw obritals
       this.orbitals.draw(camera);
-
     }
 
+    // draw lal items
     this.items.draw(camera);
 
+    // if level has storm object, draw storm manager
     if(this.levelProperties.storm) this.storm.draw(camera);
 
+    // render all particles in system
     this.particleSystem.draw(camera);
 
+    // render player
     this.player.draw(camera);
 
+    // render hint text
     this.renderHintText()
 
     // updating the outro timer
     if(this.levelState === LevelState.EXITING){
+      // if exiting draw increasingly opaque overlay for level timeout
       Draw.fillCol(new Colour(255,255,255).setA(this.outroTimer.getPercentageComplete()))
       Draw.rect(0,0,CW,CH);
     }

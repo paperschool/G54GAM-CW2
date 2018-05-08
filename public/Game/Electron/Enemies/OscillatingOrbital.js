@@ -4,12 +4,16 @@ class OscillatingOrbital extends Orbital {
 
     super(level,x,y,properties);
 
+    // setting actor colour
     this.setColour(new Colour(100,255,255));
 
+    // setting inital angle for oscillation
     this.setStartAngle(properties.angle);
 
+    // setting goal angle for oscillation rebound
     this.setGoalAngle(properties.goal);
 
+    // setting actor speed
     this.setSpeed(1);
 
   }
@@ -75,15 +79,10 @@ class OscillatingOrbital extends Orbital {
 
     super.draw(camera);
 
+    // drawing hint as to next position of oscillation
     Draw.fill(255);
-
     let pos = this.getCore().getOrbitPosition(this,this.getGoalAngle());
-
-    Draw.circle(
-      pos.x - camera.x,
-      pos.y - camera.y,
-      5
-    )
+    Draw.circle(pos.x - camera.x,pos.y - camera.y,5);
 
   }
 

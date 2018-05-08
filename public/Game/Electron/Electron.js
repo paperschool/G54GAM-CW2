@@ -4,16 +4,20 @@ class Electron extends Actor {
 
     super(x,y);
 
+    // setting reference to core
     this.setCore(core);
 
+    // setting actor radius
     this.setRadius(100);
 
+    // setting actor margin
     this.setMargin(10);
 
+    // setting jump height?
     this.setJump(2);
 
+    // seting dive and dove state to false (unused feature)
     this.setDive(false);
-
     this.setDove(false);
 
   }
@@ -118,6 +122,7 @@ class Electron extends Actor {
 
     super.update(deltaTime);
 
+    // updating collider shape for collision checks later on
     this.setCollider(new CircularCollider(this.getPos().x,this.getPos().y,this.radius));
 
   }

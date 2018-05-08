@@ -118,6 +118,7 @@ var SoundLabel = {
   CLICK_5:"simpleClick5",
 
   WIN_1:"winSound",
+  WIN_2:"winSound2",
 
   MAIN_AMBIENT_1:"mainAmbient1",
   MAIN_AMBIENT_2:"mainAmbient2",

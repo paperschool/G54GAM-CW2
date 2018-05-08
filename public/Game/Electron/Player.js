@@ -5,31 +5,44 @@ class Player extends Electron {
     // calling super with position, friction, speed and top speed values
     super(x,y);
 
+    // setting player speed
     this.setSpeed(2);
 
+    // setting player top speed
     this.setTopSpeed(10.0);
 
+    // setting player render radius
     this.setRadius(Sizes.PLAYER.unit);
 
+    // setting friction of player movement
     this.setFriction(0.95);
 
+    // setting invincibility state
     this.setInvincibility(false);
 
+    // setting margin offset of player
     this.setMargin(Sizes.MARGIN.unit);
 
+    // setting collider of player
     this.setCollider(new CircularCollider(this.getPos().x,this.getPos().y,this.getRadius()));
 
+    // setting lives (not used mechanic in the end)
     this.setLife(3);
 
+    // setting life spawn (intial life variable)
     this.setLifespan(3);
 
+    // setting value for current quadrant direction`
     this.setQuadrantDirection(-1)
 
+    // setting exit state
     this.canExit = false;
 
+    // trap for damage application (never applied)
     this.beingDamaged = false;
 
-
+    this.setCanMoveLeft(false);
+    this.setCanMoveRight(false);
 
   }
 
@@ -49,35 +62,35 @@ class Player extends Electron {
     this.quadrantDirection = quadrantDirection;
   }
 
-  // experimental feature
+  // experimental feature to invert controls depending on which side of the core the
+  // player is currently on. Mirroring a mario oddesy (circle platformer) style of movement
   updateQuadrantDirection(force){
 
-    if(!force && input.isDown(InputKeys.LEFT) || input.isDown(InputKeys.RIGHT)) {
-      return;
-    }
+    // this will basically mean the direction is not adjusted until the player releases a key
+    if(!force && input.isDown(InputKeys.LEFT) || input.isDown(InputKeys.RIGHT)) return;
 
+    // getting quadrant of circle
     let playerQuadrant = Utility.circularQuadrantDegree(this.getDirection());
 
+    // if qudrant is 3 or 4 set direction to negative
     if( playerQuadrant === 3 || playerQuadrant === 4 ) {
         this.setQuadrantDirection(-1);
     }
 
+    // if qudrant is 1 or 2 set direction to positive
     if( playerQuadrant === 1 || playerQuadrant === 2 ) {
           this.setQuadrantDirection(1);
     }
 
   }
 
+  // method that applies damage to player assuming player is not invincible
   applyDamage(damage){
-
     if(!this.invincible){
-
       if(!this.beingDamaged){
         this.setLife(this.getLife()-damage);
       }
-
     }
-
   }
 
 
@@ -101,76 +114,37 @@ class Player extends Electron {
     }
   }
 
-  // method given to player only for checking input states
-  checkMouseInput(){
-
-    if(input.mouse.click && input.mouse.button === "LEFT"){
-      if(this.weapon !== null){
-        this.weapon.setAttemptedFire(true);
-        if(this.weapon.fire(this)){
-          this.setFiring(true);
-          this.getLevel().ParticleSystem.addParticle(this.getPos().x,this.getPos().y,this.getDirection(),ParticleType.GUNSMOKE);
-          this.getLevel().camera.resetShake(this.getWeapon().getDamage()*2);
-        }
-      }
-    } else {
-      if(this.weapon !== null){
-        this.setFiring(false);
-        this.weapon.setAttemptedFire(false);
-      }
-    }
-
-  }
-
   // TODO: Fix poor association to parent class
   update(deltaTime){
-
-    // calculating angle of player relative to mouse (Kinda hacky as i know player is centered)
-    // this.calculateDirection({x:CW/2,y:CH/2},input.mouse);
 
     // checking for user input
     this.checkKeyboardInput(deltaTime);
 
-    this.checkMouseInput();
-
-    // this.updateQuadrantDirection(false);
-
     super.update(deltaTime);
 
+    // updating player collider
     this.setCollider(new CircularCollider(this.getPos().x,this.getPos().y,this.getRadius()));
 
+    // checking life state of player
     if(this.getLife() <= 0) this.setAlive(false);
-
-    // console.log(this.getDirection(),Utility.circularQuadrantDegree(this.getDirection()));
-
-    diagnostic.updateLine("Direction: ",this.getDirection());
-    // diagnostic.updateLine("Vel: ",Math.round(Utility.pyth(this.vel.x,this.vel.y) * 1000) / 1000);
 
   }
 
   draw(camera){
 
+    // setting circle outline
     Draw.strokeCol(4,new Colour(255,255,255));
 
+    // iteraing over number of lives (not used for anythign but render flair at this point)
     for(let life = this.getLife() ; life >= 0 ; life--){
-
       let radius = this.getRadius()*Utility.Map(life,0,this.getLifespan(),1,0);
-
-      let pos = this.getCore().getOrbitPosition(
-        this,
-        this.getDirection() + this.getVel().x*Utility.Map(life,0,this.getLifespan(),3,0)
-      );
-
-      Draw.circleOutline(
-        pos.x - camera.x,
-        pos.y - camera.y,
-        radius
-      );
-
+      let pos = this.getCore().getOrbitPosition(this,this.getDirection() + this.getVel().x*Utility.Map(life,0,this.getLifespan(),3,0));
+      Draw.circleOutline(pos.x - camera.x,pos.y - camera.y,radius);
     }
 
     Draw.resetStroke();
 
+    // DEBUG FOR JUMP MECHANIC
     // if(this.canExit){
     //
     //   // Draw.fill(100,255,100);

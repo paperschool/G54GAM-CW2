@@ -46,7 +46,7 @@ class World {
     this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/7.json",6,this.addLevelData.bind(this));
     this.levelManager.loadLevel("Game/Assets/Levels/Tutorial/8.json",7,this.addLevelData.bind(this));
 
-
+    // Main Sequence Levels
     this.levelManager.loadLevel("Game/Assets/Levels/1.json",8,this.addLevelData.bind(this));
     this.levelManager.loadLevel("Game/Assets/Levels/2.json",9,this.addLevelData.bind(this));
     this.levelManager.loadLevel("Game/Assets/Levels/3.json",10,this.addLevelData.bind(this));
@@ -54,8 +54,8 @@ class World {
     this.levelManager.loadLevel("Game/Assets/Levels/5.json",12,this.addLevelData.bind(this));
     this.levelManager.loadLevel("Game/Assets/Levels/6.json",13,this.addLevelData.bind(this));
 
+    // index of current level
     this.currentLevel = -1;
-
 
     // registering input call backs for state switching purposes (pause -> play or play -> pause)
     input.setCallBack(InputKeys.PAUSE,'worldpause',(function(){

@@ -48,7 +48,8 @@ sound.add(SoundLabel.CLICK_1,'Game/Assets/Sounds/simpleClick1.wav',0.2,false,fal
 sound.add(SoundLabel.CLICK_4,'Game/Assets/Sounds/simpleClick4.wav',0.1,false,false);
 sound.add(SoundLabel.CLICK_5,'Game/Assets/Sounds/simpleClick5.wav',0.1,false,false);
 sound.add(SoundLabel.WIN_1,'Game/Assets/Sounds/winMusic.wav',0.05,false,false);
-sound.add(SoundLabel.MAIN_AMBIENT_1,'Game/Assets/Sounds/ambientMusic1.wav',0.2,true,false);
+sound.add(SoundLabel.WIN_2,'Game/Assets/Sounds/winSound1.wav',0.05,false,false);
+sound.add(SoundLabel.MAIN_AMBIENT_1,'Game/Assets/Sounds/ambientMusic1.mp3',0.2,true,false);
 
 function pageFilesReady(){
 
